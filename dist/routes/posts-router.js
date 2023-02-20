@@ -43,7 +43,7 @@ exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.p
     }
 });
 //Delete Post By ID + Auth
-exports.postsRouter.delete('/:id', (req, res) => {
+exports.postsRouter.delete('/:id', exports.adminAuth, (req, res) => {
     const isDeleted = posts_repository_1.postsRepository.deletePost(+req.params.id);
     if (isDeleted) {
         res.send(204);

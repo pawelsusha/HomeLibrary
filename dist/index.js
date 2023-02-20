@@ -9,7 +9,6 @@ const blogs_router_1 = require("./routes/blogs-router");
 const posts_router_1 = require("./routes/posts-router");
 const posts_repository_1 = require("./repositories/posts-repository");
 const blogs_repository_1 = require("./repositories/blogs-repository");
-const auth_middleware_1 = require("./MiddleWares/auth-middleware");
 const app = (0, express_1.default)();
 const port = 3000;
 const parserMiddleware = (0, body_parser_1.default)({});
@@ -24,7 +23,7 @@ app.use(parserMiddleware);
     }
 }*/
 //#1 Delete All Data OK+
-app.delete('/testing/all-data', auth_middleware_1.adminAuth, (req, res) => {
+app.delete('/testing/all-data', (req, res) => {
     blogs_repository_1.blogs.splice(0, blogs_repository_1.blogs.length);
     posts_repository_1.posts.splice(0, posts_repository_1.posts.length);
     res.send(204);

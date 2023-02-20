@@ -4,17 +4,18 @@ exports.blogsRouter = void 0;
 const express_1 = require("express");
 const blogs_repository_1 = require("../repositories/blogs-repository");
 const auth_middleware_1 = require("../MiddleWares/auth-middleware");
+const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 exports.blogsRouter = (0, express_1.Router)({});
 exports.blogsRouter.get('/', (req, res) => {
     const foundedBlogs = blogs_repository_1.blogsRepository.findBlogs(req.query.title
         ? req.query.toString()
         : null);
-    res.send(foundedBlogs);
+    res.status(200).send(foundedBlogs);
 })
     .get('/:id', (req, res) => {
     let blog = blogs_repository_1.blogsRepository.getBlogsById(+req.params.id);
     if (blog) {
-        res.send(blog);
+        res.status(200).send(blog);
     }
     else {
         res.send(404);
@@ -29,11 +30,11 @@ exports.blogsRouter.get('/', (req, res) => {
     else
         res.send(404);
 })
-    .post('/', auth_middleware_1.adminAuth, (req, res) => {
+    .post('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.inputValidationMiddleWare, (req, res) => {
     const newBlog = blogs_repository_1.blogsRepository.createBLog(req.body.title);
     res.status(201).send(newBlog);
 })
-    .put('/', auth_middleware_1.adminAuth, (req, res) => {
+    .put('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.inputValidationMiddleWare, (req, res) => {
     const id = +req.params.id;
     const title = req.body.name;
     const isUpdated = blogs_repository_1.blogsRepository.updateBlog(id, req.body.name);
