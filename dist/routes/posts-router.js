@@ -33,13 +33,14 @@ exports.postsRouter.get('/:id', (req, res) => {
 exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     const newPost = posts_repository_1.postsRepository.createPost(req.body, req.body.blog.Name);
     res.status(201).send(newPost);
+    return;
 });
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     const isUpdated = posts_repository_1.postsRepository.updatePost(req.params.id, req.body);
     if (isUpdated) {
         const post = posts_repository_1.postsRepository.getPostById(req.params.id);
-        res.send(post);
+        res.sendStatus(204).send(post);
     }
     else {
         res.send(404);

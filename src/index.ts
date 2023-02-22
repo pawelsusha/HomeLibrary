@@ -1,7 +1,7 @@
 import express, {NextFunction, query, Request, Response} from 'express';
 import bodyParser from 'body-parser'
 import {blogsRouter} from "./routes/blogs-router";
-import {postsRouter} from "./routes/posts-router";
+import {basicAuth, postsRouter} from "./routes/posts-router";
 import {posts, postsRepository} from "./repositories/posts-repository";
 import {blogs, blogsRepository} from "./repositories/blogs-repository";
 import {body} from "express-validator";
@@ -37,7 +37,7 @@ app.delete('/testing/all-data', (req:Request, res: Response ) => {
 app.get('/', (req, res) => {
     res.send('Blog Platform 22Feb2023/2056')
 })
-
+//app.use(basicAuth)
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

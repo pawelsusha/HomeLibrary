@@ -9,6 +9,7 @@ export const postsRouter = Router({});
 export const basicAuth = require('express-basic-auth')
 export const adminAuth = basicAuth({users: { 'admin': 'qwerty' }});
 
+
 //Get All Posts By no auth
 postsRouter.get('/', (req: Request, res: Response) => {
     const foundPosts = postsRepository.findPosts(req.query.title
@@ -31,6 +32,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
 postsRouter.post('/', adminAuth, postValidationMiddleware,inputValidationMiddleware, (req: Request, res: Response) => {
     const newPost = postsRepository.createPost(req.body, req.body.blog!.Name)
     res.status(201).send(newPost)
+    return
 })
 
 //Update Post By ID + Auth
@@ -38,7 +40,7 @@ postsRouter.put('/:id', adminAuth, postValidationMiddleware,inputValidationMiddl
     const isUpdated = postsRepository.updatePost(req.params.id, req.body)
     if (isUpdated) {
         const post = postsRepository.getPostById(req.params.id)
-        res.send(post)
+        res.sendStatus(204).send(post)
     } else {
         res.send(404)
     }
