@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postValidationMiddleware = exports.blogValidationMiddleware = exports.inputValidationMiddleWare = exports.findByIdBlogs = void 0;
+exports.postValidationMiddleware = exports.blogValidationMiddleware = exports.inputValidationMiddleware = exports.findByIdBlogs = void 0;
 const blogs_repository_1 = require("../repositories/blogs-repository");
 const express_validator_1 = require("express-validator");
 const findByIdBlogs = value => {
@@ -11,7 +11,7 @@ const findByIdBlogs = value => {
     return true;
 };
 exports.findByIdBlogs = findByIdBlogs;
-const inputValidationMiddleWare = (req, res, next) => {
+const inputValidationMiddleware = (req, res, next) => {
     const error = (0, express_validator_1.validationResult)(req);
     if (error.isEmpty()) {
         next();
@@ -27,7 +27,7 @@ const inputValidationMiddleWare = (req, res, next) => {
         });
     }
 };
-exports.inputValidationMiddleWare = inputValidationMiddleWare;
+exports.inputValidationMiddleware = inputValidationMiddleware;
 exports.blogValidationMiddleware = [
     (0, express_validator_1.body)('name').trim().isLength({ min: 1, max: 15 }).isString(),
     (0, express_validator_1.body)('description').trim().isLength({ min: 1, max: 500 }).isString(),

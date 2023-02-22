@@ -6,6 +6,7 @@ const posts_repository_1 = require("../repositories/posts-repository");
 //import {body, validationResult} from "express-validator";
 //import {Post, Blog} from "../types/types";
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
+const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
@@ -20,19 +21,21 @@ exports.postsRouter.get('/', (req, res) => {
 exports.postsRouter.get('/:id', (req, res) => {
     let post = posts_repository_1.postsRepository.getPostById(+req.params.id);
     if (post) {
-        res.send(post);
+        res.status(200).send(post);
+        return;
     }
     else {
         res.send(404);
+        return;
     }
 });
 //Create Post  + Auth
-exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
+exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     const newPost = posts_repository_1.postsRepository.createPost(req.body, req.body.blog.Name);
     res.status(201).send(newPost);
 });
 //Update Post By ID + Auth
-exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
+exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     const isUpdated = posts_repository_1.postsRepository.updatePost(+req.params.id, req.body);
     if (isUpdated) {
         const post = posts_repository_1.postsRepository.getPostById(+req.params.id);
