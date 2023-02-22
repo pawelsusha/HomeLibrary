@@ -19,7 +19,7 @@ exports.postsRouter.get('/', (req, res) => {
 });
 //Get Post By ID no Auth
 exports.postsRouter.get('/:id', (req, res) => {
-    let post = posts_repository_1.postsRepository.getPostById(+req.params.id);
+    let post = posts_repository_1.postsRepository.getPostById(req.params.id);
     if (post) {
         res.status(200).send(post);
         return;
@@ -36,9 +36,9 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.pos
 });
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
-    const isUpdated = posts_repository_1.postsRepository.updatePost(+req.params.id, req.body);
+    const isUpdated = posts_repository_1.postsRepository.updatePost(req.params.id, req.body);
     if (isUpdated) {
-        const post = posts_repository_1.postsRepository.getPostById(+req.params.id);
+        const post = posts_repository_1.postsRepository.getPostById(req.params.id);
         res.send(post);
     }
     else {
@@ -47,7 +47,7 @@ exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.p
 });
 //Delete Post By ID + Auth
 exports.postsRouter.delete('/:id', exports.adminAuth, (req, res) => {
-    const isDeleted = posts_repository_1.postsRepository.deletePost(+req.params.id);
+    const isDeleted = posts_repository_1.postsRepository.deletePost(req.params.id);
     if (isDeleted) {
         res.send(204);
     }
