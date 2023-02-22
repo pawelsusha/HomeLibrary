@@ -33,6 +33,7 @@ app.delete('/testing/all-data', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Blog Platform 22Feb2023/2056');
 });
+//app.use(basicAuth)
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

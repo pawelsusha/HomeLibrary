@@ -6,6 +6,7 @@ import {Blog} from "../types/types";
 import {Post} from "../types/types";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
 import { inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
+import {basicAuth} from "./posts-router";
 
 export const blogsRouter = Router({})
 //GET - return all
