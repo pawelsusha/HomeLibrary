@@ -8,15 +8,20 @@ import {adminAuth, } from "../MiddleWares/auth-middleware";
 import { inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 
 export const blogsRouter = Router({})
-
-blogsRouter.get('/', (req:Request, res: Response ) => {
+//GET - return all
+blogsRouter.get('/',  (req: Request, res: Response) =>{
+    let allBlogs = blogsRepository.returnAllBlogs();
+    res.status(200).send(allBlogs);
+    return
+})
+/*blogsRouter.get('/', (req:Request, res: Response ) => {
     const foundedBlogs = blogsRepository.findBlogs(req.query.title
         ?req.query.toString()
         : null);
     res.status(200).send(foundedBlogs);
-})
+})*/
 .get('/:id', (req:Request, res: Response ) => {
-    let blog = blogsRepository.getBlogsById(+req.params.id)
+    let blog = blogsRepository.getBlogsById(req.params.id)
     if (blog) {
         res.status(200).send(blog);
         return
@@ -26,7 +31,7 @@ blogsRouter.get('/', (req:Request, res: Response ) => {
     }
 })
 .delete('/:id', adminAuth,(req:Request, res: Response) => {
-    const id = +req.params.id;
+    const id = req.params.id;
     const isDeleted = blogsRepository.deleteBlog(id)
     if (isDeleted){
         res.send(204)
@@ -39,7 +44,7 @@ blogsRouter.get('/', (req:Request, res: Response ) => {
     res.status(201).send(newBlog)
 })
 .put('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,(req:Request, res:Response) => {
-    const id = +req.params.id
+    const id = req.params.id
     const title = req.body.name
     const isUpdated = blogsRepository.updateBlog(id, req.body)
     if (isUpdated){
