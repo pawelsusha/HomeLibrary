@@ -33,7 +33,7 @@ app.delete('/testing/all-data', (req:Request, res: Response ) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Blog Platform')
+    res.send('Blog Platform 22Feb2023/1245')
 })
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)

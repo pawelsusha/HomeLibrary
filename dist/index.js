@@ -29,7 +29,7 @@ app.delete('/testing/all-data', (req, res) => {
     res.send(204);
 });
 app.get('/', (req, res) => {
-    res.send('Blog Platform');
+    res.send('Blog Platform 22Feb2023/1245');
 });
 app.use('/blogs', blogs_router_1.blogsRouter);
 app.use('/posts', posts_router_1.postsRouter);
