@@ -3,27 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.blogsRepository = exports.blogs = void 0;
 exports.blogs = [
     {
-        id: 1111,
-        name: "string",
-        description: "string",
-        websiteUrl: "string"
-    },
-    {
-        id: 2222,
-        name: "string",
-        description: "string",
-        websiteUrl: "string"
+        "id": "string",
+        "name": "string",
+        "description": "string",
+        "websiteUrl": "string"
     }
 ];
 exports.blogsRepository = {
-    findBlogs(name) {
-        if (name) {
-            let filteredBlogs = (exports.blogs.filter(b => b.name.indexOf(name) > -1));
-            return filteredBlogs;
-        }
-        else {
-            return exports.blogs;
-        }
+    returnAllBlogs() {
+        return exports.blogs;
     },
     getBlogsById(id) {
         let blog = exports.blogs.find(b => b.id === id);
@@ -35,12 +23,12 @@ exports.blogsRepository = {
             return false;
         }
     },
-    createBLog(name) {
+    createBLog(blog) {
         const newBlog = {
-            id: +(new Date()),
-            name: "string",
-            description: "string",
-            websiteUrl: "string",
+            id: '' + (+(new Date())),
+            name: blog.name,
+            description: blog.description,
+            websiteUrl: blog.websiteUrl
         };
         exports.blogs.push(newBlog);
         return newBlog;
