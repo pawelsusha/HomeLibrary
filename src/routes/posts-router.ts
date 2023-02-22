@@ -3,6 +3,7 @@ import {postsRepository} from "../repositories/posts-repository";
 //import {body, validationResult} from "express-validator";
 //import {Post, Blog} from "../types/types";
 import {postValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
+import {inputValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 
 export const postsRouter = Router({});
 export const basicAuth = require('express-basic-auth')
@@ -19,19 +20,21 @@ postsRouter.get('/', (req: Request, res: Response) => {
 postsRouter.get('/:id', (req: Request, res: Response) => {
     let post = postsRepository.getPostById(+req.params.id)
     if (post) {
-        res.send(post)
+        res.status(200).send(post)
+        return
     } else {
         res.send(404)
+        return
     }
 })
 //Create Post  + Auth
-postsRouter.post('/', adminAuth, postValidationMiddleware, (req: Request, res: Response) => {
+postsRouter.post('/', adminAuth, postValidationMiddleware,inputValidationMiddleware, (req: Request, res: Response) => {
     const newPost = postsRepository.createPost(req.body, req.body.blog!.Name)
     res.status(201).send(newPost)
 })
 
 //Update Post By ID + Auth
-postsRouter.put('/:id', adminAuth, postValidationMiddleware, (req: Request, res: Response) => {
+postsRouter.put('/:id', adminAuth, postValidationMiddleware,inputValidationMiddleware, (req: Request, res: Response) => {
     const isUpdated = postsRepository.updatePost(+req.params.id, req.body)
     if (isUpdated) {
         const post = postsRepository.getPostById(+req.params.id)

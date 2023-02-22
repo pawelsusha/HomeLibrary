@@ -16,13 +16,15 @@ exports.blogsRouter.get('/', (req, res) => {
     let blog = blogs_repository_1.blogsRepository.getBlogsById(+req.params.id);
     if (blog) {
         res.status(200).send(blog);
+        return;
     }
     else {
         res.send(404);
+        return;
     }
 })
     .delete('/:id', auth_middleware_1.adminAuth, (req, res) => {
-    const id = +req.params.blogId;
+    const id = +req.params.id;
     const isDeleted = blogs_repository_1.blogsRepository.deleteBlog(id);
     if (isDeleted) {
         res.send(204);
@@ -30,14 +32,14 @@ exports.blogsRouter.get('/', (req, res) => {
     else
         res.send(404);
 })
-    .post('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.inputValidationMiddleWare, (req, res) => {
-    const newBlog = blogs_repository_1.blogsRepository.createBLog(req.body.title);
+    .post('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => {
+    const newBlog = blogs_repository_1.blogsRepository.createBLog(req.body);
     res.status(201).send(newBlog);
 })
-    .put('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.inputValidationMiddleWare, (req, res) => {
+    .put('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => {
     const id = +req.params.id;
     const title = req.body.name;
-    const isUpdated = blogs_repository_1.blogsRepository.updateBlog(id, req.body.name);
+    const isUpdated = blogs_repository_1.blogsRepository.updateBlog(id, req.body);
     if (isUpdated) {
         res.send(204);
     }
