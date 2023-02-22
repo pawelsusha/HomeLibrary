@@ -18,7 +18,7 @@ postsRouter.get('/', (req: Request, res: Response) => {
 })
 //Get Post By ID no Auth
 postsRouter.get('/:id', (req: Request, res: Response) => {
-    let post = postsRepository.getPostById(+req.params.id)
+    let post = postsRepository.getPostById(req.params.id)
     if (post) {
         res.status(200).send(post)
         return
@@ -35,9 +35,9 @@ postsRouter.post('/', adminAuth, postValidationMiddleware,inputValidationMiddlew
 
 //Update Post By ID + Auth
 postsRouter.put('/:id', adminAuth, postValidationMiddleware,inputValidationMiddleware, (req: Request, res: Response) => {
-    const isUpdated = postsRepository.updatePost(+req.params.id, req.body)
+    const isUpdated = postsRepository.updatePost(req.params.id, req.body)
     if (isUpdated) {
-        const post = postsRepository.getPostById(+req.params.id)
+        const post = postsRepository.getPostById(req.params.id)
         res.send(post)
     } else {
         res.send(404)
@@ -45,7 +45,7 @@ postsRouter.put('/:id', adminAuth, postValidationMiddleware,inputValidationMiddl
 })
 //Delete Post By ID + Auth
 postsRouter.delete('/:id',adminAuth, (req: Request, res: Response) => {
-    const isDeleted = postsRepository.deletePost(+req.params.id)
+    const isDeleted = postsRepository.deletePost(req.params.id)
     if (isDeleted) {
         res.send(204);
     } else {

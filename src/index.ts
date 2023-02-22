@@ -6,12 +6,14 @@ import {posts, postsRepository} from "./repositories/posts-repository";
 import {blogs, blogsRepository} from "./repositories/blogs-repository";
 import {body} from "express-validator";
 import {adminAuth} from "./MiddleWares/auth-middleware";
+export { NextFunction };
 
 const app = express()
 const port = 3000
 const parserMiddleware = bodyParser({});
 app.use(parserMiddleware)
-
+app.use('/blogs', blogsRouter)
+app.use('/posts', postsRouter)
 
 //app.use
 //export const titleValidation = body('title').trim().isLength({min: 3, max: 10}).withMessage('ERORRR TITLE 3-10 MAX');
@@ -33,17 +35,12 @@ app.delete('/testing/all-data', (req:Request, res: Response ) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Blog Platform 22Feb2023/1245')
+    res.send('Blog Platform 22Feb2023/2056')
 })
-app.use('/blogs', blogsRouter)
-app.use('/posts', postsRouter)
-
-
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
-export { NextFunction };
+
 
