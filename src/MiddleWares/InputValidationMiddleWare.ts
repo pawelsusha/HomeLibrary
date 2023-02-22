@@ -12,7 +12,7 @@ export  const findByIdBlogs : CustomValidator = value => {
     }
     return true
 };
-export const inputValidationMiddleWare = (req: Request,
+export const inputValidationMiddleware  = (req: Request,
                                           res: Response,
                                           next: NextFunction) => {
     const error = validationResult(req)
