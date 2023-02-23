@@ -1,8 +1,12 @@
-import {Request, Response} from "express";
-import {blogs,blogsRepository} from '../repositories/blogs-repository'
-import {postsRouter} from "../routes/posts-router";
-import {Post} from "../types/types";
-
+import {Blog, blogs,blogsRepository} from '../repositories/blogs-repository'
+export type Post = {
+    id: string,
+    title: string,
+    shortDescription: string,
+    content: string,
+    blogId: string,
+    blogName: string
+}
 export const posts = [
     {
         id: "string",
@@ -28,7 +32,7 @@ export const postsRepository = {
         return post;
 
     },
-    createPost(post: Post, blogName: string) {
+    createPost(post: Post, blogName: string ) {
         const newPost = {
             id: '' + (+(new Date())),
             title: post.title,

@@ -1,4 +1,4 @@
-export type Blog = {
+/*export type Blog = {
     id: string,
     name: string,
     description: string,
@@ -14,4 +14,4 @@ export type Post = {
     blogId: string,
     blogName: string,
     createdAt: string
-}
+}*/

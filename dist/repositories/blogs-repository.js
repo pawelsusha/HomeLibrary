@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.blogsRepository = exports.blogs = void 0;
 exports.blogs = [
     {
-        "id": "string",
-        "name": "string",
-        "description": "string",
-        "websiteUrl": "string"
+        "id": "1",
+        "name": "first",
+        "description": "blablbalblab",
+        "websiteUrl": "www.one.by"
     }
 ];
 exports.blogsRepository = {
@@ -17,7 +17,7 @@ exports.blogsRepository = {
         let blog = exports.blogs.find(b => b.id === id);
         if (blog) {
             blog.id = id;
-            return true;
+            return blog;
         }
         else {
             return false;
@@ -32,6 +32,11 @@ exports.blogsRepository = {
         };
         exports.blogs.push(newBlog);
         return newBlog;
+    },
+    //GET - return by ID
+    returnBlogById(id) {
+        let blog = exports.blogs.find(p => p.id === id);
+        return blog;
     },
     updateBlog(id, name) {
         let blog = exports.blogs.find(b => b.id === id);

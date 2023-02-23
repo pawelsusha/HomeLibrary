@@ -1,19 +1,21 @@
 import {Request, Response} from "express";
 import {blogsRouter} from "../routes/blogs-router";
 import {posts} from "./posts-repository";
-//import {Blog} from "../types/types";
+
+
 export type Blog = {
     id: string,
     name: string,
     description: string,
     websiteUrl: string
 }
+
 export const blogs = [
     {
-        "id": "string",
-        "name": "string",
-        "description": "string",
-        "websiteUrl": "string"
+        "id": "1",
+        "name": "first",
+        "description": "blablbalblab",
+        "websiteUrl": "www.one.by"
     }
 ];
 export const blogsRepository = {
@@ -25,7 +27,7 @@ export const blogsRepository = {
         let blog = blogs.find(b => b.id === id)
         if (blog) {
             blog.id = id
-            return true;
+            return blog;
         } else {
             return false;
         }
@@ -40,6 +42,11 @@ export const blogsRepository = {
         }
         blogs.push(newBlog)
         return newBlog
+    },
+    //GET - return by ID
+    returnBlogById(id: string) {
+        let blog = blogs.find(p => p.id === id);
+        return blog
     },
     updateBlog(id: string, name: string) {
         let blog = blogs.find(b => b.id === id)
