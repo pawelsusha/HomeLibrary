@@ -44,7 +44,7 @@ exports.blogsRouter.get('/', (req, res) => {
 })
     .put('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => {
     const id = req.params.id;
-    const title = req.body.name;
+    //    const title = req.body.name
     const isUpdated = blogs_repository_1.blogsRepository.updateBlog(id, req.body);
     if (isUpdated) {
         res.send(204);

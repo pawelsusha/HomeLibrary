@@ -1,12 +1,8 @@
 import {Request, Response, Router} from "express";
 import {blogsRepository} from "../repositories/blogs-repository";
-import {blogs} from "../repositories/blogs-repository";
-import {postsRepository} from "../repositories/posts-repository";
-import {Blog} from "../types/types";
-import {Post} from "../types/types";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
 import { inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
-import {basicAuth} from "./posts-router";
+
 
 export const blogsRouter = Router({})
 //GET - return all
@@ -46,7 +42,7 @@ blogsRouter.get('/',  (req: Request, res: Response) =>{
 })
 .put('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,(req:Request, res:Response) => {
     const id = req.params.id
-    const title = req.body.name
+        //    const title = req.body.name
     const isUpdated = blogsRepository.updateBlog(id, req.body)
     if (isUpdated){
         res.send(204)
