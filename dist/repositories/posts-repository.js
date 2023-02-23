@@ -3,31 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.postsRepository = exports.posts = void 0;
 exports.posts = [
     {
-        id: 1,
-        title: "11111",
+        id: "string",
+        title: "string",
         shortDescription: "string",
         content: "string",
         blogId: "string",
-        blogName: "string",
-        createdAt: "string"
-    },
-    {
-        id: 2,
-        title: "6666",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName: "string",
-        createdAt: "string"
-    },
-    {
-        id: 3,
-        title: "6666",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName: "string",
-        createdAt: "string"
+        blogName: "string"
     }
 ];
 exports.postsRepository = {
@@ -46,7 +27,7 @@ exports.postsRepository = {
     },
     createPost(post, blogName) {
         const newPost = {
-            id: +(new Date()),
+            id: '' + (+(new Date())),
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
@@ -57,10 +38,10 @@ exports.postsRepository = {
         exports.posts.push(newPost);
         return newPost;
     },
-    updatePost(id, title) {
+    updatePost(id, string) {
         let post = exports.posts.find(p => p.id === id);
         if (post) {
-            post.title = title;
+            post.title = string;
             return true;
         }
         else {

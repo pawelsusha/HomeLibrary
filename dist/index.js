@@ -13,6 +13,8 @@ const app = (0, express_1.default)();
 const port = 3000;
 const parserMiddleware = (0, body_parser_1.default)({});
 app.use(parserMiddleware);
+app.use('/blogs', blogs_router_1.blogsRouter);
+app.use('/posts', posts_router_1.postsRouter);
 //app.use
 //export const titleValidation = body('title').trim().isLength({min: 3, max: 10}).withMessage('ERORRR TITLE 3-10 MAX');
 /*const authMiddleWare = (req:Request, res: Response, next: NextFunction ) => {
@@ -29,10 +31,9 @@ app.delete('/testing/all-data', (req, res) => {
     res.send(204);
 });
 app.get('/', (req, res) => {
-    res.send('Blog Platform 22Feb2023/1245');
+    res.send('Blog Platform 22Feb2023/2056');
 });
-app.use('/blogs', blogs_router_1.blogsRouter);
-app.use('/posts', posts_router_1.postsRouter);
+//app.use(basicAuth)
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

@@ -1,36 +1,22 @@
-import {Request, Response} from "express";
-import {postsRouter} from "../routes/posts-router";
-import {Post} from "../types/types";
-
+import {Blog, blogs,blogsRepository} from '../repositories/blogs-repository'
+export type Post = {
+    id: string,
+    title: string,
+    shortDescription: string,
+    content: string,
+    blogId: string,
+    blogName: string
+}
 export const posts = [
     {
-        id: 1,
-        title: "11111",
+        id: "string",
+        title: "string",
         shortDescription: "string",
         content: "string",
         blogId: "string",
-        blogName: "string",
-        createdAt: "string"
-    },
-    {
-        id: 2,
-        title: "6666",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName: "string",
-        createdAt: "string"
+        blogName : "string"
     }
-    ,{
-        id: 3,
-        title: "6666",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName: "string",
-        createdAt: "string"
-    }
-]
+];
 
 export const postsRepository = {
     findPosts(title: string | null | undefined) {
@@ -41,14 +27,14 @@ export const postsRepository = {
             return posts
         }
     },
-    getPostById(id: number) {
-        let post = posts.find(p =>p.id === id)
+    getPostById(id: string) {
+        let post = posts.find(p => p.id === id)
         return post;
 
     },
-    createPost(post: Post, blogName: string) {
+    createPost(post: Post, blogName: string ) {
         const newPost = {
-            id: +(new Date()),
+            id: '' + (+(new Date())),
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
@@ -59,16 +45,16 @@ export const postsRepository = {
         posts.push(newPost)
         return newPost
     },
-    updatePost(id: number, title: string) {
+    updatePost(id: string, string: string) {
         let post = posts.find(p => p.id === id)
         if (post) {
-            post.title = title
+            post.title = string
             return true;
         } else {
             return false;
         }
     },
-    deletePost(id: number) {
+    deletePost(id: string) {
         for (let i = 0; i < posts.length; i++) {
             if (posts[i].id === id) {
                 posts.splice(i, 1);

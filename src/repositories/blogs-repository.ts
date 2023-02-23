@@ -1,52 +1,54 @@
 import {Request, Response} from "express";
 import {blogsRouter} from "../routes/blogs-router";
 import {posts} from "./posts-repository";
-import {Blog} from "../types/types";
+
+
+export type Blog = {
+    id: string,
+    name: string,
+    description: string,
+    websiteUrl: string
+}
 
 export const blogs = [
     {
-        id: 1111,
-        name: "string",
-        description: "string",
-        websiteUrl: "string"
-    },
-    {
-        id: 2222,
-        name: "string",
-        description: "string",
-        websiteUrl: "string"
+        "id": "1",
+        "name": "first",
+        "description": "blablbalblab",
+        "websiteUrl": "www.one.by"
     }
-]
+];
 export const blogsRepository = {
-    findBlogs(name: string | null | undefined) {
-        if (name) {
-            let filteredBlogs = (blogs.filter(b => b.name.indexOf(name) > -1))
-            return filteredBlogs
-        } else {
+        returnAllBlogs(){
             return blogs
-        }
-    },
-    getBlogsById(id: number) {
+        },
+
+    getBlogsById(id: string) {
         let blog = blogs.find(b => b.id === id)
         if (blog) {
             blog.id = id
-            return true;
+            return blog;
         } else {
             return false;
         }
 
     },
-    createBLog(name: string) {
+    createBLog(blog: Blog) {
         const newBlog = {
-            id: +(new Date()),
-            name: "string",
-            description: "string",
-            websiteUrl: "string",
+            id: '' + (+(new Date())),
+            name: blog.name,
+            description: blog.description,
+            websiteUrl: blog.websiteUrl
         }
         blogs.push(newBlog)
         return newBlog
     },
-    updateBlog(id: number, name: string) {
+    //GET - return by ID
+    returnBlogById(id: string) {
+        let blog = blogs.find(p => p.id === id);
+        return blog
+    },
+    updateBlog(id: string, name: string) {
         let blog = blogs.find(b => b.id === id)
         if (blog) {
             blog.name = name
@@ -55,7 +57,7 @@ export const blogsRepository = {
             return false;
         }
     },
-    deleteBlog(id: number) {
+    deleteBlog(id: string) {
         for (let i = 0; i < blogs.length; i++) {
             if (blogs[i].id === id) {
                 blogs.splice(i, 1);

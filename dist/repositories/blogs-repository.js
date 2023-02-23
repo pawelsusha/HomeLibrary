@@ -3,47 +3,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.blogsRepository = exports.blogs = void 0;
 exports.blogs = [
     {
-        id: 1111,
-        name: "string",
-        description: "string",
-        websiteUrl: "string"
-    },
-    {
-        id: 2222,
-        name: "string",
-        description: "string",
-        websiteUrl: "string"
+        "id": "1",
+        "name": "first",
+        "description": "blablbalblab",
+        "websiteUrl": "www.one.by"
     }
 ];
 exports.blogsRepository = {
-    findBlogs(name) {
-        if (name) {
-            let filteredBlogs = (exports.blogs.filter(b => b.name.indexOf(name) > -1));
-            return filteredBlogs;
-        }
-        else {
-            return exports.blogs;
-        }
+    returnAllBlogs() {
+        return exports.blogs;
     },
     getBlogsById(id) {
         let blog = exports.blogs.find(b => b.id === id);
         if (blog) {
             blog.id = id;
-            return true;
+            return blog;
         }
         else {
             return false;
         }
     },
-    createBLog(name) {
+    createBLog(blog) {
         const newBlog = {
-            id: +(new Date()),
-            name: "string",
-            description: "string",
-            websiteUrl: "string",
+            id: '' + (+(new Date())),
+            name: blog.name,
+            description: blog.description,
+            websiteUrl: blog.websiteUrl
         };
         exports.blogs.push(newBlog);
         return newBlog;
+    },
+    //GET - return by ID
+    returnBlogById(id) {
+        let blog = exports.blogs.find(p => p.id === id);
+        return blog;
     },
     updateBlog(id, name) {
         let blog = exports.blogs.find(b => b.id === id);
