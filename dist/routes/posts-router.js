@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminAuth = exports.basicAuth = exports.postsRouter = void 0;
 const express_1 = require("express");
 const posts_repository_1 = require("../repositories/posts-repository");
+const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
+const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
 const blogs_repository_1 = require("../repositories/blogs-repository");
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
@@ -27,14 +29,14 @@ exports.postsRouter.get('/:id', (req, res) => {
     }
 });
 //Create Post  + Auth
-exports.postsRouter.post('/', exports.adminAuth, (req, res) => {
+exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inputValidationMiddleware, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
     const blog = blogs_repository_1.blogsRepository.returnBlogById(req.body.blogId);
     const newPost = posts_repository_1.postsRepository.createPost(req.body, blog.name);
     res.status(201).send(newPost);
     return;
 });
 //Update Post By ID + Auth
-exports.postsRouter.put('/:id', exports.adminAuth, (req, res) => {
+exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_2.inputValidationMiddleware, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
     const isUpdated = posts_repository_1.postsRepository.updatePost(req.params.id, req.body);
     if (isUpdated) {
         const post = posts_repository_1.postsRepository.getPostById(req.params.id);

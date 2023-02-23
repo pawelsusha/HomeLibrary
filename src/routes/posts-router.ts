@@ -30,7 +30,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 //Create Post  + Auth
-postsRouter.post('/', adminAuth, (req: Request, res: Response) => {
+postsRouter.post('/', adminAuth, inputValidationMiddleware,postValidationMiddleware, (req: Request, res: Response) => {
     const blog = blogsRepository.returnBlogById(req.body.blogId)
     const newPost = postsRepository.createPost(req.body, blog!.name);
     res.status(201).send(newPost)
@@ -38,7 +38,7 @@ postsRouter.post('/', adminAuth, (req: Request, res: Response) => {
 })
 
 //Update Post By ID + Auth
-postsRouter.put('/:id', adminAuth, (req: Request, res: Response) => {
+postsRouter.put('/:id', adminAuth,inputValidationMiddleware, postValidationMiddleware, (req: Request, res: Response) => {
     const isUpdated = postsRepository.updatePost(req.params.id, req.body)
     if (isUpdated) {
         const post = postsRepository.getPostById(req.params.id)
