@@ -9,6 +9,8 @@ import {adminAuth} from "./MiddleWares/auth-middleware";
 export { NextFunction };
 
 const app = express()
+app.use(bodyParser({}))
+
 const port = 3000
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)

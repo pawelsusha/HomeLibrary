@@ -5,7 +5,7 @@ export type Post = {
     shortDescription: string,
     content: string,
     blogId: string,
-//    blogName: string
+    blogName: string
 }
 export let posts = [
     {
@@ -14,7 +14,7 @@ export let posts = [
         shortDescription: "string",
         content: "string",
         blogId: "string",
-       // blogName : "string"
+        blogName : "string"
     }
 ];
 
@@ -39,7 +39,7 @@ export const postsRepository = {
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: post.blogId,
-            blogName: blogName
+            blogName:post.blogName,
         }
         posts.push(newPost);
         return newPost;

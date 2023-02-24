@@ -4,11 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const blogs_router_1 = require("./routes/blogs-router");
 const posts_router_1 = require("./routes/posts-router");
 const posts_repository_1 = require("./repositories/posts-repository");
 const blogs_repository_1 = require("./repositories/blogs-repository");
 const app = (0, express_1.default)();
+app.use((0, body_parser_1.default)({}));
 const port = 3000;
 app.use('/blogs', blogs_router_1.blogsRouter);
 app.use('/posts', posts_router_1.postsRouter);
