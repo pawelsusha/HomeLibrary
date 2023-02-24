@@ -30,7 +30,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 //Create Post  + Auth
-postsRouter.post('/', adminAuth, (req: Request, res: Response) => {
+postsRouter.post('/', adminAuth,inputValidationMiddleware, postValidationMiddleware, (req: Request, res: Response) => {
     console.log(req.body)
     const blog = blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
