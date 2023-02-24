@@ -35,14 +35,13 @@ blogsRouter.get('/',  (req: Request, res: Response) =>{
     }else
         res.send(404)
 })
-.post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,blogValidationMiddleware,(req:Request, res:Response) => {
-    const newBlog = blogsRepository.createBLog(req.body)
-
-    res.status(201).send(newBlog)
+.post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,(req:Request, res:Response) => {
+   const newBlog = blogsRepository.createBLog(req.body);
+   res.status(201).json(newBlog);
 })
-.put('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,blogValidationMiddleware,(req:Request, res:Response) => {
+.put('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,(req:Request, res:Response) => {
     const id = req.params.id
-        //    const title = req.body.name
+    const title = req.body.name
     const isUpdated = blogsRepository.updateBlog(id, req.body)
     if (isUpdated){
         res.send(204)

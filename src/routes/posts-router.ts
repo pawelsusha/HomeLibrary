@@ -31,8 +31,8 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
 })
 //Create Post  + Auth
 postsRouter.post('/', adminAuth, inputValidationMiddleware,postValidationMiddleware, (req: Request, res: Response) => {
-    const blog = blogsRepository.returnBlogById(req.body.blogId)
-    const newPost = postsRepository.createPost(req.body, blog!.name);
+    //const id = blogsRepository.returnBlogById(req.params.id)
+    const newPost = postsRepository.createPost(req.body);
     res.status(201).send(newPost)
     return
 })

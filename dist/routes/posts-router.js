@@ -5,7 +5,6 @@ const express_1 = require("express");
 const posts_repository_1 = require("../repositories/posts-repository");
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
-const blogs_repository_1 = require("../repositories/blogs-repository");
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
@@ -30,8 +29,8 @@ exports.postsRouter.get('/:id', (req, res) => {
 });
 //Create Post  + Auth
 exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inputValidationMiddleware, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
-    const blog = blogs_repository_1.blogsRepository.returnBlogById(req.body.blogId);
-    const newPost = posts_repository_1.postsRepository.createPost(req.body, blog.name);
+    //const id = blogsRepository.returnBlogById(req.params.id)
+    const newPost = posts_repository_1.postsRepository.createPost(req.body);
     res.status(201).send(newPost);
     return;
 });

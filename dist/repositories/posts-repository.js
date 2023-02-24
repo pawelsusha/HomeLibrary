@@ -8,7 +8,7 @@ exports.posts = [
         shortDescription: "string",
         content: "string",
         blogId: "string",
-        blogName: "string"
+        // blogName : "string"
     }
 ];
 exports.postsRepository = {
@@ -32,8 +32,7 @@ exports.postsRepository = {
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: post.blogId,
-            blogName: blogName,
-            createdAt: "" + new Date()
+            blogName: blogName
         };
         exports.posts.push(newPost);
         return newPost;

@@ -10,24 +10,10 @@ export { NextFunction };
 
 const app = express()
 const port = 3000
-const parserMiddleware = bodyParser({});
-app.use(parserMiddleware)
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 
-//app.use
-//export const titleValidation = body('title').trim().isLength({min: 3, max: 10}).withMessage('ERORRR TITLE 3-10 MAX');
 
-
-/*const authMiddleWare = (req:Request, res: Response, next: NextFunction ) => {
-    if (req.query.token === "qwerty") {
-        next();
-    } else {
-        res.send(401)
-    }
-}*/
-
-//#1 Delete All Data OK+
 app.delete('/testing/all-data', (req:Request, res: Response ) => {
     blogs.splice(0,blogs.length);
     posts.splice(0,posts.length);
