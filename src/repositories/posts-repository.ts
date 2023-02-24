@@ -7,7 +7,7 @@ export type Post = {
     blogId: string,
     blogName: string
 }
-export const posts = [
+export let posts = [
     {
         id: "string",
         title: "string",
@@ -32,18 +32,17 @@ export const postsRepository = {
         return post;
 
     },
-    createPost(post: Post, blogName: string ) {
+    createPost(post: Post, blogName: string){
         const newPost = {
             id: '' + (+(new Date())),
-            title: post.title,
+            title : post.title,
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: post.blogId,
-            blogName: blogName,
-            createdAt : "" + new Date()
+            blogName:post.blogName,
         }
-        posts.push(newPost)
-        return newPost
+        posts.push(newPost);
+        return newPost;
     },
     updatePost(id: string, string: string) {
         let post = posts.find(p => p.id === id)

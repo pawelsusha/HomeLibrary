@@ -10,7 +10,7 @@ export type Blog = {
     websiteUrl: string
 }
 
-export const blogs = [
+export let blogs = [
     {
         "id": "1",
         "name": "first",

@@ -32,8 +32,7 @@ exports.postsRepository = {
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: post.blogId,
-            blogName: blogName,
-            createdAt: "" + new Date()
+            blogName: post.blogName,
         };
         exports.posts.push(newPost);
         return newPost;
