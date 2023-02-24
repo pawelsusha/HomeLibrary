@@ -29,7 +29,7 @@ exports.postsRouter.get('/:id', (req, res) => {
     }
 });
 //Create Post  + Auth
-exports.postsRouter.post('/', exports.adminAuth, (req, res) => {
+exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inputValidationMiddleware, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
     console.log(req.body);
     const blog = blogs_repository_1.blogsRepository.getBlogsById(req.body.blogId);
     if (!blog) {
