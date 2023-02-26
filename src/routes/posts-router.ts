@@ -16,7 +16,7 @@ postsRouter.get('/', (req: Request, res: Response) => {
     const foundPosts = postsRepository.findPosts(req.query.title
         ? req.query.toString()
         : null);
-    res.send(foundPosts)
+    res.status(200).send(foundPosts)
 })
 //Get Post By ID no Auth
 postsRouter.get('/:id', (req: Request, res: Response) => {
@@ -25,7 +25,7 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
         res.status(200).send(post)
         return
     } else {
-        res.send(404)
+        res.status(404)
         return
     }
 })
@@ -50,15 +50,15 @@ postsRouter.put('/:id', adminAuth,inputValidationMiddleware, postValidationMiddl
         const post = postsRepository.getPostById(req.params.id)
         res.sendStatus(204).send(post)
     } else {
-        res.send(404)
+        res.sendStatus(404)
     }
 })
 //Delete Post By ID + Auth
 postsRouter.delete('/:id',adminAuth, (req: Request, res: Response) => {
     const isDeleted = postsRepository.deletePost(req.params.id)
     if (isDeleted) {
-        res.send(204);
+        res.sendStatus(204);
     } else {
-        res.send(404);
+        res.sendStatus(404);
     }
 })
