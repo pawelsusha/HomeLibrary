@@ -38,7 +38,7 @@ postsRouter.post('/', adminAuth,inputValidationMiddleware, postValidationMiddlew
 
         return
     }
-    const newPost = postsRepository.createPost(req.body);
+    const newPost = postsRepository.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost)
     return
 })

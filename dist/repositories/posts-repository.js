@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.postsRepository = exports.posts = void 0;
 exports.posts = [
     {
-        id: "1",
-        title: "FirstTitle",
-        shortDescription: "FirstshortDescription",
-        content: "Firstcontent",
-        blogId: "1",
-        blogName: "first"
+        id: "string",
+        title: "string",
+        shortDescription: "string",
+        content: "string",
+        blogId: "string",
+        blogName: "string"
     }
 ];
 exports.postsRepository = {
@@ -25,7 +25,7 @@ exports.postsRepository = {
         let post = exports.posts.find(p => p.id === id);
         return post;
     },
-    createPost(post) {
+    createPost(post, blogName, blodId) {
         const newPost = {
             id: '' + (+(new Date())),
             title: post.title,
