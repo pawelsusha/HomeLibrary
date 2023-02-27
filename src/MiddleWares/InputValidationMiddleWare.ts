@@ -44,7 +44,7 @@ export const postValidationMiddleware = [
     body("title").trim().isLength({min:1, max: 30}).isString(),
     body("shortDescription").trim().isLength({min:1,max:100}).isString(),
     body("content").trim().isLength({min:1, max: 1000}).isString(),
-    body("blogId").trim().custom(findByIdBlogs).isString()
+    body("blogId").isString().trim().notEmpty().custom(findByIdBlogs)
 ];
 export const blogValidationMiddleware = [
     body("name").trim().isLength({min: 1, max: 15}).isString(),
