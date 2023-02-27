@@ -30,12 +30,12 @@ exports.postsRouter.get('/:id', (req, res) => {
         return;
     }
     else {
-        res.status(404);
+        res.sendStatus(404);
         return;
     }
 });
 //Create Post  + Auth
-exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inputValidationMiddleware, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
+exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     console.log(req.body);
     const blog = blogs_repository_1.blogsRepository.getBlogsById(req.body.blogId);
     if (!blog) {
@@ -50,8 +50,7 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inp
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     const isUpdated = posts_repository_1.postsRepository.updatePost(req.params.id, req.body);
     if (isUpdated) {
-        const post = posts_repository_1.postsRepository.getPostById(req.params.id);
-        res.sendStatus(204).send(post);
+        res.sendStatus(204);
     }
     else {
         res.sendStatus(404);

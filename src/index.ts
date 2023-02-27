@@ -1,15 +1,13 @@
-import express, {NextFunction, query, Request, Response} from 'express';
-import bodyParser from 'body-parser'
+import express, {NextFunction, Request, Response} from 'express';
 import {blogsRouter} from "./routes/blogs-router";
-import {basicAuth, postsRouter} from "./routes/posts-router";
-import {posts, postsRepository} from "./repositories/posts-repository";
-import {blogs, blogsRepository} from "./repositories/blogs-repository";
-import {body} from "express-validator";
-import {adminAuth} from "./MiddleWares/auth-middleware";
+import {postsRouter} from "./routes/posts-router";
+import {posts} from "./repositories/posts-repository";
+import {blogs} from "./repositories/blogs-repository";
+
 export { NextFunction };
 
 const app = express()
-app.use(bodyParser({}))
+app.use(express.json())
 
 const port = 3000
 app.use('/blogs', blogsRouter)

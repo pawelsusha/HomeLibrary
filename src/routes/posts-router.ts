@@ -33,12 +33,12 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
         res.status(200).send(post)
         return
     } else {
-        res.status(404)
+        res.sendStatus(404)
         return
     }
 })
 //Create Post  + Auth
-postsRouter.post('/', adminAuth,inputValidationMiddleware, postValidationMiddleware, (req: Request, res: Response) => {
+postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, (req: Request, res: Response) => {
     console.log(req.body)
     const blog = blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
@@ -54,8 +54,7 @@ postsRouter.post('/', adminAuth,inputValidationMiddleware, postValidationMiddlew
 postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddleware,(req: Request, res: Response) => {
     const isUpdated = postsRepository.updatePost(req.params.id, req.body)
     if (isUpdated) {
-        const post = postsRepository.getPostById(req.params.id)
-        res.sendStatus(204).send(post)
+        res.sendStatus(204)
     } else {
         res.sendStatus(404)
     }

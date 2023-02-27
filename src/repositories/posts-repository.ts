@@ -10,7 +10,7 @@ export type Post = {
 export type PostInputModel = {
     title: string,
     shortDescription: string,
-    content: string
+    content: string,
     blogId: string,
     blogName: string
 }
@@ -22,7 +22,7 @@ export let posts = [
         content: "firstCont",
         blogId: "1",
         blogName : "firstblog"
-    }
+    },
     {
         id: "2",
         title: "second",
