@@ -40,6 +40,7 @@ export const postsRepository = {
             content: post.content,
             blogId: post.blogId,
             blogName:post.blogName,
+            createdAt:new Date().toISOString()
         }
         posts.push(newPost);
         return newPost;

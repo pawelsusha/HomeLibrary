@@ -14,7 +14,7 @@ exports.postsRouter.get('/', (req, res) => {
     const foundPosts = posts_repository_1.postsRepository.findPosts(req.query.title
         ? req.query.toString()
         : null);
-    res.send(foundPosts);
+    res.status(200).send(foundPosts);
 });
 //Get Post By ID no Auth
 exports.postsRouter.get('/:id', (req, res) => {
@@ -24,7 +24,7 @@ exports.postsRouter.get('/:id', (req, res) => {
         return;
     }
     else {
-        res.send(404);
+        res.status(404);
         return;
     }
 });
@@ -48,16 +48,16 @@ exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_2.i
         res.sendStatus(204).send(post);
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
 });
 //Delete Post By ID + Auth
 exports.postsRouter.delete('/:id', exports.adminAuth, (req, res) => {
     const isDeleted = posts_repository_1.postsRepository.deletePost(req.params.id);
     if (isDeleted) {
-        res.send(204);
+        res.sendStatus(204);
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
     }
 });

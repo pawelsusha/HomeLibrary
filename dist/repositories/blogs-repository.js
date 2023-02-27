@@ -38,10 +38,12 @@ exports.blogsRepository = {
         let blog = exports.blogs.find(p => p.id === id);
         return blog;
     },
-    updateBlog(id, name) {
+    updateBlog(id, body) {
         let blog = exports.blogs.find(b => b.id === id);
         if (blog) {
-            blog.name = name;
+            blog.name = body.name;
+            blog.description = body.description,
+                blog.websiteUrl = body.websiteUrl;
             return true;
         }
         else {
