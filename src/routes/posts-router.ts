@@ -43,7 +43,6 @@ postsRouter.post('/', adminAuth,inputValidationMiddleware, postValidationMiddlew
     const blog = blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
         res.sendStatus(404)
-
         return
     }
     const newPost = postsRepository.createPost(req.body, blog.id, blog.name);

@@ -16,12 +16,20 @@ export type PostInputModel = {
 }
 export let posts = [
     {
-        id: "string",
-        title: "string",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName : "string"
+        id: "1",
+        title: "first",
+        shortDescription: "firstDesc",
+        content: "firstCont",
+        blogId: "1",
+        blogName : "firstblog"
+    }
+    {
+        id: "2",
+        title: "second",
+        shortDescription: "secDesc",
+        content: "seccont",
+        blogId: "2",
+        blogName : "second"
     }
 ];
 
@@ -46,8 +54,6 @@ export const postsRepository = {
         } else {
             return false;
         }
-
-
     },
     createPost(post: Post, blogName:string, blodId:string){
         const newPost = {
@@ -57,7 +63,7 @@ export const postsRepository = {
             content: post.content,
             blogId: post.blogId,
             blogName:post.blogName,
-            createdAt:new Date().toISOString()
+           // createdAt:new Date().toISOString()
         }
         posts.push(newPost);
         return newPost;
