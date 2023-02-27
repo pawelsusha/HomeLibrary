@@ -22,7 +22,7 @@ export let posts = [
         content: "firstCont",
         blogId: "1",
         blogName : "firstblog"
-    }
+    },
     {
         id: "2",
         title: "second",
