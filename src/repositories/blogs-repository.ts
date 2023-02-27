@@ -10,6 +10,12 @@ export type Blog = {
     websiteUrl: string
 }
 
+export type BlogInputModel = {
+    name: string,
+    description: string,
+    websiteUrl: string
+}
+
 export let blogs = [
     {
         "id": "1",
@@ -48,10 +54,12 @@ export const blogsRepository = {
         let blog = blogs.find(p => p.id === id);
         return blog
     },
-    updateBlog(id: string, name: string) {
+    updateBlog(id: string, body: BlogInputModel) {
         let blog = blogs.find(b => b.id === id)
         if (blog) {
-            blog.name = name
+            blog.name = body.name
+            blog.description = body.description,
+            blog.websiteUrl = body.websiteUrl
             return true;
         } else {
             return false;

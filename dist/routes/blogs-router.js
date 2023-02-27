@@ -25,7 +25,7 @@ exports.blogsRouter.get('/', (req, res) => {
         return;
     }
     else {
-        res.send(404);
+        res.sendStatus(404);
         return;
     }
 })
@@ -33,21 +33,20 @@ exports.blogsRouter.get('/', (req, res) => {
     const id = req.params.id;
     const isDeleted = blogs_repository_1.blogsRepository.deleteBlog(id);
     if (isDeleted) {
-        res.send(204);
+        res.sendStatus(204);
     }
     else
-        res.send(404);
+        res.sendStatus(404);
 })
     .post('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => {
     const newBlog = blogs_repository_1.blogsRepository.createBLog(req.body);
-    res.status(201).json(newBlog);
+    res.status(201).send(newBlog);
 })
-    .put('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => {
+    .put('/:id', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => {
     const id = req.params.id;
-    const title = req.body.name;
     const isUpdated = blogs_repository_1.blogsRepository.updateBlog(id, req.body);
     if (isUpdated) {
-        res.send(204);
+        res.sendStatus(204);
     }
     else
         res.send(404);

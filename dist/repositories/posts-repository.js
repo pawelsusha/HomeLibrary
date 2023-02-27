@@ -33,6 +33,7 @@ exports.postsRepository = {
             content: post.content,
             blogId: post.blogId,
             blogName: post.blogName,
+            createdAt: new Date().toISOString()
         };
         exports.posts.push(newPost);
         return newPost;
