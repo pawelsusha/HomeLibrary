@@ -11,15 +11,17 @@ export type PostInputModel = {
     title: string,
     shortDescription: string,
     content: string
+    blogId: string,
+    blogName: string
 }
 export let posts = [
     {
-        id: "1",
-        title: "FirstTitle",
-        shortDescription: "FirstshortDescription",
-        content: "Firstcontent",
-        blogId: "1",
-        blogName : "first"
+        id: "string",
+        title: "string",
+        shortDescription: "string",
+        content: "string",
+        blogId: "string",
+        blogName : "string"
     }
 ];
 
@@ -37,7 +39,7 @@ export const postsRepository = {
         return post;
 
     },
-    createPost(post: Post){
+    createPost(post: Post, blogName:string, blodId:string){
         const newPost = {
             id: '' + (+(new Date())),
             title : post.title,
