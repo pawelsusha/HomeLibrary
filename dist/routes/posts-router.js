@@ -36,7 +36,7 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inp
         res.sendStatus(404);
         return;
     }
-    const newPost = posts_repository_1.postsRepository.createPost(req.body, blog.name);
+    const newPost = posts_repository_1.postsRepository.createPost(req.body);
     res.status(201).send(newPost);
     return;
 });
