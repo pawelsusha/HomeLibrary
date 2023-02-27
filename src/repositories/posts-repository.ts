@@ -26,6 +26,10 @@ export let posts = [
 ];
 
 export const postsRepository = {
+    returnAllPosts(){
+        return posts
+    },
+/*    postsRepository = {
     findPosts(title: string | null | undefined) {
         if (title) {
             let filteredPosts = (posts.filter(p => p.title.indexOf(title) > -1))
@@ -33,10 +37,16 @@ export const postsRepository = {
         } else {
             return posts
         }
-    },
+    },*/
     getPostById(id: string) {
         let post = posts.find(p => p.id === id)
-        return post;
+        if (post) {
+            post.id = id
+            return post;
+        } else {
+            return false;
+        }
+
 
     },
     createPost(post: Post, blogName:string, blodId:string){

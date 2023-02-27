@@ -12,18 +12,27 @@ exports.posts = [
     }
 ];
 exports.postsRepository = {
-    findPosts(title) {
-        if (title) {
-            let filteredPosts = (exports.posts.filter(p => p.title.indexOf(title) > -1));
-            return filteredPosts;
-        }
-        else {
-            return exports.posts;
-        }
+    returnAllPosts() {
+        return exports.posts;
     },
+    /*    postsRepository = {
+        findPosts(title: string | null | undefined) {
+            if (title) {
+                let filteredPosts = (posts.filter(p => p.title.indexOf(title) > -1))
+                return filteredPosts
+            } else {
+                return posts
+            }
+        },*/
     getPostById(id) {
         let post = exports.posts.find(p => p.id === id);
-        return post;
+        if (post) {
+            post.id = id;
+            return post;
+        }
+        else {
+            return false;
+        }
     },
     createPost(post, blogName, blodId) {
         const newPost = {

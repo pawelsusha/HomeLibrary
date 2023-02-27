@@ -10,11 +10,17 @@ exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
 //Get All Posts By no auth
-exports.postsRouter.get('/', (req, res) => {
-    const foundPosts = posts_repository_1.postsRepository.findPosts(req.query.title
+/*postsRouter.get('/', (req: Request, res: Response) => {
+    const foundPosts = postsRepository.findPosts(req.query.title
         ? req.query.toString()
         : null);
-    res.status(200).send(foundPosts);
+    res.status(200).send(foundPosts)
+})*/
+//Get All Posts By no auth
+exports.postsRouter.get('/', (req, res) => {
+    let allPosts = posts_repository_1.postsRepository.returnAllPosts();
+    res.status(200).send(allPosts);
+    return;
 });
 //Get Post By ID no Auth
 exports.postsRouter.get('/:id', (req, res) => {
@@ -41,7 +47,7 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_2.inp
     return;
 });
 //Update Post By ID + Auth
-exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_2.inputValidationMiddleware, InputValidationMiddleWare_1.postValidationMiddleware, (req, res) => {
+exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => {
     const isUpdated = posts_repository_1.postsRepository.updatePost(req.params.id, req.body);
     if (isUpdated) {
         const post = posts_repository_1.postsRepository.getPostById(req.params.id);
