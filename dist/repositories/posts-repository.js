@@ -3,12 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.postsRepository = exports.posts = void 0;
 exports.posts = [
     {
-        id: "string",
-        title: "string",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName: "string"
+        id: "1",
+        title: "first",
+        shortDescription: "firstDesc",
+        content: "firstCont",
+        blogId: "1",
+        blogName: "firstblog"
+    },
+    {
+        id: "2",
+        title: "second",
+        shortDescription: "secDesc",
+        content: "seccont",
+        blogId: "2",
+        blogName: "second"
     }
 ];
 exports.postsRepository = {
@@ -42,7 +50,7 @@ exports.postsRepository = {
             content: post.content,
             blogId: post.blogId,
             blogName: post.blogName,
-            createdAt: new Date().toISOString()
+            // createdAt:new Date().toISOString()
         };
         exports.posts.push(newPost);
         return newPost;
