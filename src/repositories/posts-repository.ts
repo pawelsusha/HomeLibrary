@@ -37,7 +37,7 @@ export const postsRepository = {
         return post;
 
     },
-    createPost(post: Post, blogName: string){
+    createPost(post: Post){
         const newPost = {
             id: '' + (+(new Date())),
             title : post.title,
