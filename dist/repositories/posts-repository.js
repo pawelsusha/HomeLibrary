@@ -42,14 +42,14 @@ exports.postsRepository = {
             return false;
         }
     },
-    createPost(post, blogName, blodId) {
+    createPost(post, blogId, blogName) {
         const newPost = {
-            id: '' + (+(new Date())),
+            id: new Date().toISOString(),
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
-            blogId: post.blogId,
-            blogName: post.blogName,
+            blogId: blogId,
+            blogName: blogName,
             // createdAt:new Date().toISOString()
         };
         exports.posts.push(newPost);

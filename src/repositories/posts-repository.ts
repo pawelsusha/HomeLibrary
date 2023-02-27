@@ -55,14 +55,14 @@ export const postsRepository = {
             return false;
         }
     },
-    createPost(post: Post, blogName:string, blodId:string){
-        const newPost = {
-            id: '' + (+(new Date())),
+    createPost(post: Post, blogId:string, blogName:string): Post{
+        const newPost: Post = {
+            id: new Date().toISOString(),
             title : post.title,
             shortDescription: post.shortDescription,
             content: post.content,
-            blogId: post.blogId,
-            blogName:post.blogName,
+            blogId: blogId,
+            blogName: blogName,
            // createdAt:new Date().toISOString()
         }
         posts.push(newPost);
