@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.postsRepository = exports.posts = void 0;
 exports.posts = [
     {
-        id: "string",
-        title: "string",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName: "string"
+        id: "1",
+        title: "FirstTitle",
+        shortDescription: "FirstshortDescription",
+        content: "Firstcontent",
+        blogId: "1",
+        blogName: "first"
     }
 ];
 exports.postsRepository = {
@@ -38,10 +38,12 @@ exports.postsRepository = {
         exports.posts.push(newPost);
         return newPost;
     },
-    updatePost(id, string) {
+    updatePost(id, body) {
         let post = exports.posts.find(p => p.id === id);
         if (post) {
-            post.title = string;
+            post.title = body.title;
+            post.shortDescription = body.shortDescription;
+            post.content = body.content;
             return true;
         }
         else {

@@ -1,4 +1,4 @@
-import {Blog, blogs,blogsRepository} from '../repositories/blogs-repository'
+import {Blog, BlogInputModel, blogs, blogsRepository} from '../repositories/blogs-repository'
 export type Post = {
     id: string,
     title: string,
@@ -7,14 +7,19 @@ export type Post = {
     blogId: string,
     blogName: string
 }
+export type PostInputModel = {
+    title: string,
+    shortDescription: string,
+    content: string
+}
 export let posts = [
     {
-        id: "string",
-        title: "string",
-        shortDescription: "string",
-        content: "string",
-        blogId: "string",
-        blogName : "string"
+        id: "1",
+        title: "FirstTitle",
+        shortDescription: "FirstshortDescription",
+        content: "Firstcontent",
+        blogId: "1",
+        blogName : "first"
     }
 ];
 
@@ -45,10 +50,12 @@ export const postsRepository = {
         posts.push(newPost);
         return newPost;
     },
-    updatePost(id: string, string: string) {
+    updatePost(id: string, body: PostInputModel) {
         let post = posts.find(p => p.id === id)
         if (post) {
-            post.title = string
+            post.title = body.title
+            post.shortDescription = body.shortDescription
+            post.content = body.content
             return true;
         } else {
             return false;
