@@ -5,7 +5,7 @@ import { blogs, blogsRepository } from "../repositories/blogs-repository";
 import { posts, postsRepository } from "../repositories/posts-repository";
 import { body, validationResult } from 'express-validator';
 export  const findByIdBlogs : CustomValidator = value => {
-    let blog = blogsRepository.returnBlogById(value)
+    let blog = blogsRepository.getBlogsById(value)
     if (!blog){
         throw new Error('Invalid blogId')
     }

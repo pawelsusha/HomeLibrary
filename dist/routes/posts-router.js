@@ -46,7 +46,7 @@ exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
 //Create Post  + Auth
 exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
-    const blog = blogs_repository_1.blogsRepository.getBlogsById(req.body.blogId);
+    const blog = yield blogs_repository_1.blogsRepository.getBlogsById(req.body.blogId);
     if (!blog) {
         res.sendStatus(404);
         return;

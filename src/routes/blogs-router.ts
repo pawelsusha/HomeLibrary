@@ -6,19 +6,13 @@ import { inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWa
 
 export const blogsRouter = Router({})
 //GET - return all
-blogsRouter.get('/',  (req: Request, res: Response) =>{
-    let allBlogs = blogsRepository.returnAllBlogs();
+blogsRouter.get('/',  async (req: Request, res: Response) =>{
+    let allBlogs = await blogsRepository.returnAllBlogs();
     res.status(200).send(allBlogs);
     return
 })
-/*blogsRouter.get('/', (req:Request, res: Response ) => {
-    const foundedBlogs = blogsRepository.findBlogs(req.query.title
-        ?req.query.toString()
-        : null);
-    res.status(200).send(foundedBlogs);
-})*/
-.get('/:id', (req:Request, res: Response ) => {
-    let blog = blogsRepository.getBlogsById(req.params.id)
+.get('/:id', async(req:Request, res: Response ) => {
+    let blog = await blogsRepository.getBlogsById(req.params.id)
     if (blog) {
         res.status(200).send(blog);
         return
@@ -27,23 +21,23 @@ blogsRouter.get('/',  (req: Request, res: Response) =>{
         return
     }
 })
-.delete('/:id', adminAuth,(req:Request, res: Response) => {
-    const id = req.params.id;
-    const isDeleted = blogsRepository.deleteBlog(id)
-    if (isDeleted){
-        res.sendStatus(204)
-    }else
-        res.sendStatus(404)
-})
-.post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,(req:Request, res:Response) => {
-   const newBlog = blogsRepository.createBLog(req.body);
+.post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,async(req:Request, res:Response) => {
+   const newBlog = await blogsRepository.createBLog(req.body);
    res.status(201).send(newBlog);
 })
-.put('/:id',adminAuth,blogValidationMiddleware,inputValidationMiddleware,(req:Request, res:Response) => {
+.put('/:id',adminAuth,blogValidationMiddleware,inputValidationMiddleware,async(req:Request, res:Response) => {
     const id = req.params.id
-    const isUpdated = blogsRepository.updateBlog(id, req.body)
+    const isUpdated = await blogsRepository.updateBlog(id, req.body)
     if (isUpdated){
         res.sendStatus(204)
     }else
         res.send(404)
 })
+    .delete('/:id', adminAuth, async(req:Request, res: Response) => {
+        const id = req.params.id;
+        const isDeleted = await blogsRepository.deleteBlog(id)
+        if (isDeleted){
+            res.sendStatus(204)
+        }else
+            res.sendStatus(404)
+    })

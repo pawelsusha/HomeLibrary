@@ -25,21 +25,15 @@ export let blogs = [
     }
 ];
 export const blogsRepository = {
-        returnAllBlogs(){
+      async returnAllBlogs() : Promise <Blog[]>{
             return blogs
         },
 
-    getBlogsById(id: string) {
-        let blog = blogs.find(b => b.id === id)
-        if (blog) {
-            blog.id = id
-            return blog;
-        } else {
-            return false;
-        }
-
+    async getBlogsById(id: string): Promise<Blog | undefined> {
+        let blog : Blog | undefined = blogs.find(p => p.id === id);
+        return blog
     },
-    createBLog(blog: Blog) {
+    async createBLog(blog: Blog): Promise<Blog> {
         const newBlog = {
             id: '' + (+(new Date())),
             name: blog.name,
@@ -47,14 +41,14 @@ export const blogsRepository = {
             websiteUrl: blog.websiteUrl
         }
         blogs.push(newBlog)
-        return newBlog
+        return newBlog;
     },
     //GET - return by ID
-    returnBlogById(id: string) {
+/*    async returnBlogById(id: string) : Promise<Blog []> {
         let blog = blogs.find(p => p.id === id);
         return blog
-    },
-    updateBlog(id: string, body: BlogInputModel) {
+    },*/
+    async updateBlog(id: string, body: BlogInputModel): Promise <boolean> {
         let blog = blogs.find(b => b.id === id)
         if (blog) {
             blog.name = body.name
@@ -65,7 +59,7 @@ export const blogsRepository = {
             return false;
         }
     },
-    deleteBlog(id: string) {
+    async deleteBlog(id: string) {
         for (let i = 0; i < blogs.length; i++) {
             if (blogs[i].id === id) {
                 blogs.splice(i, 1);
