@@ -34,7 +34,7 @@ export let posts = [
 ];
 
 export const postsRepository = {
-    returnAllPosts(){
+    async returnAllPosts() : Promise<Post[]>{
         return posts
     },
 /*    postsRepository = {
@@ -46,7 +46,7 @@ export const postsRepository = {
             return posts
         }
     },*/
-    getPostById(id: string) {
+   async getPostById(id: string): Promise <Post | boolean> {
         let post = posts.find(p => p.id === id)
         if (post) {
             post.id = id
@@ -55,7 +55,7 @@ export const postsRepository = {
             return false;
         }
     },
-    createPost(post: Post, blogId:string, blogName:string): Post{
+    async createPost(post: Post, blogId:string, blogName:string): Promise <Post | null>{
         const newPost: Post = {
             id: new Date().toISOString(),
             title : post.title,
@@ -68,7 +68,7 @@ export const postsRepository = {
         posts.push(newPost);
         return newPost;
     },
-    updatePost(id: string, body: PostInputModel) {
+    async updatePost(id: string, body: PostInputModel): Promise <Post | boolean> {
         let post = posts.find(p => p.id === id)
         if (post) {
             post.title = body.title
@@ -79,7 +79,7 @@ export const postsRepository = {
             return false;
         }
     },
-    deletePost(id: string) {
+    async deletePost(id: string): Promise<boolean> {
         for (let i = 0; i < posts.length; i++) {
             if (posts[i].id === id) {
                 posts.splice(i, 1);

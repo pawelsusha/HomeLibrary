@@ -20,15 +20,17 @@ export const adminAuth = basicAuth({users: { 'admin': 'qwerty' }});
     res.status(200).send(foundPosts)
 })*/
 //Get All Posts By no auth
-postsRouter.get('/',  (req: Request, res: Response) =>{
-    let allPosts = postsRepository.returnAllPosts();
+postsRouter.get('/',
+    async (req: Request, res: Response) =>{
+    const allPosts = await postsRepository.returnAllPosts();
     res.status(200).send(allPosts);
     return
 })
 
 //Get Post By ID no Auth
-postsRouter.get('/:id', (req: Request, res: Response) => {
-    let post = postsRepository.getPostById(req.params.id)
+postsRouter.get('/:id',
+    async (req: Request, res: Response) => {
+    let post = await postsRepository.getPostById(req.params.id)
     if (post) {
         res.status(200).send(post)
         return
@@ -38,21 +40,21 @@ postsRouter.get('/:id', (req: Request, res: Response) => {
     }
 })
 //Create Post  + Auth
-postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, (req: Request, res: Response) => {
+postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
     console.log(req.body)
     const blog = blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
         res.sendStatus(404)
         return
     }
-    const newPost = postsRepository.createPost(req.body, blog.id, blog.name);
+    const newPost = await postsRepository.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost)
     return
 })
 
 //Update Post By ID + Auth
-postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddleware,(req: Request, res: Response) => {
-    const isUpdated = postsRepository.updatePost(req.params.id, req.body)
+postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddleware, async(req: Request, res: Response) => {
+    const isUpdated = await postsRepository.updatePost(req.params.id, req.body)
     if (isUpdated) {
         res.sendStatus(204)
     } else {
@@ -60,8 +62,8 @@ postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddle
     }
 })
 //Delete Post By ID + Auth
-postsRouter.delete('/:id',adminAuth, (req: Request, res: Response) => {
-    const isDeleted = postsRepository.deletePost(req.params.id)
+postsRouter.delete('/:id',adminAuth, async(req: Request, res: Response) => {
+    const isDeleted = await postsRepository.deletePost(req.params.id)
     if (isDeleted) {
         res.sendStatus(204);
     } else {
