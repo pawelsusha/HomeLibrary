@@ -21,12 +21,16 @@ app.delete('/testing/all-data', (req:Request, res: Response ) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Blog Platform 23Feb2023/2254')
+    res.send('Blog Platform 09Mar2023/2254')
 })
 //app.use(basicAuth)
+
+
+const startApp = async() =>{
+    await runDb()
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
-
+}
+startApp()
 
