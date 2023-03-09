@@ -55,7 +55,7 @@ export const postsRepository = {
             return false;
         }
     },
-    async createPost(post: Post, blogId:string, blogName:string): Promise <Post | null>{
+    async createPost(post: Post, blogId:string, blogName:string): Promise <Post | null> {
         const newPost: Post = {
             id: new Date().toISOString(),
             title : post.title,

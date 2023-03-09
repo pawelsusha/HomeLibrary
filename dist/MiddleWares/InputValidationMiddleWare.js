@@ -4,7 +4,7 @@ exports.blogValidationMiddleware = exports.postValidationMiddleware = exports.bl
 const blogs_repository_1 = require("../repositories/blogs-repository");
 const express_validator_1 = require("express-validator");
 const findByIdBlogs = value => {
-    let blog = blogs_repository_1.blogsRepository.returnBlogById(value);
+    let blog = blogs_repository_1.blogsRepository.getBlogsById(value);
     if (!blog) {
         throw new Error('Invalid blogId');
     }

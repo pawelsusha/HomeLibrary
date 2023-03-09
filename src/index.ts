@@ -3,6 +3,7 @@ import {blogsRouter} from "./routes/blogs-router";
 import {postsRouter} from "./routes/posts-router";
 import {posts} from "./repositories/posts-repository";
 import {blogs} from "./repositories/blogs-repository";
+import {runDb} from "./db/db";
 
 export { NextFunction };
 
@@ -21,12 +22,16 @@ app.delete('/testing/all-data', (req:Request, res: Response ) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Blog Platform 23Feb2023/2254')
+    res.send('Blog Platform 09Mar2023/2254')
 })
 //app.use(basicAuth)
+
+
+const startApp = async() =>{
+    await runDb()
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
-
+}
+startApp()
 
