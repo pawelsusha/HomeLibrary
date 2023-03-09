@@ -3,6 +3,7 @@ import {blogsRouter} from "./routes/blogs-router";
 import {postsRouter} from "./routes/posts-router";
 import {posts} from "./repositories/posts-repository";
 import {blogs} from "./repositories/blogs-repository";
+import {runDb} from "./db/db";
 
 export { NextFunction };
 
