@@ -1,5 +1,10 @@
-node_modules
-.idea
-dist
-yarn-error.log
-.env
+# Default ignored files
+/.idea/
+/shelf/
+/workspace.xml
+/node_modules/
+/dist/
+/yarn-error.log
+/.env
+# Editor-based HTTP Client requests
+/httpRequests/
