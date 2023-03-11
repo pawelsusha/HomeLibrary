@@ -1,4 +1,4 @@
-import {Blog, BlogInputModel, blogs, blogsRepository} from './blogs-repository'
+import {Blog, BlogInputModel, blogs, blogsRepository} from '../repositories/blogs-db-repository'
 export type Post = {
     id: string,
     title: string,

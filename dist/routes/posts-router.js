@@ -11,10 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminAuth = exports.basicAuth = exports.postsRouter = void 0;
 const express_1 = require("express");
-const posts_repository_1 = require("../repositories/posts-repository");
+const posts_db_repository_1 = require("../repositories/posts-db-repository");
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
-const blogs_repository_1 = require("../repositories/blogs-repository");
+const blogs_db_repository_1 = require("../repositories/blogs-db-repository");
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
@@ -27,13 +27,13 @@ exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
 })*/
 //Get All Posts By no auth
 exports.postsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allPosts = yield posts_repository_1.postsRepository.returnAllPosts();
+    const allPosts = yield posts_db_repository_1.postsRepository.returnAllPosts();
     res.status(200).send(allPosts);
     return;
 }));
 //Get Post By ID no Auth
 exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let post = yield posts_repository_1.postsRepository.getPostById(req.params.id);
+    let post = yield posts_db_repository_1.postsRepository.getPostById(req.params.id);
     if (post) {
         res.status(200).send(post);
         return;
@@ -46,18 +46,18 @@ exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
 //Create Post  + Auth
 exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
-    const blog = yield blogs_repository_1.blogsRepository.getBlogsById(req.body.blogId);
+    const blog = yield blogs_db_repository_1.blogsRepository.getBlogsById(req.body.blogId);
     if (!blog) {
         res.sendStatus(404);
         return;
     }
-    const newPost = yield posts_repository_1.postsRepository.createPost(req.body, blog.id, blog.name);
+    const newPost = yield posts_db_repository_1.postsRepository.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost);
     return;
 }));
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUpdated = yield posts_repository_1.postsRepository.updatePost(req.params.id, req.body);
+    const isUpdated = yield posts_db_repository_1.postsRepository.updatePost(req.params.id, req.body);
     if (isUpdated) {
         res.sendStatus(204);
     }
@@ -67,7 +67,7 @@ exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.p
 }));
 //Delete Post By ID + Auth
 exports.postsRouter.delete('/:id', exports.adminAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const isDeleted = yield posts_repository_1.postsRepository.deletePost(req.params.id);
+    const isDeleted = yield posts_db_repository_1.postsRepository.deletePost(req.params.id);
     if (isDeleted) {
         res.sendStatus(204);
     }

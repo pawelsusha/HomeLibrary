@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {blogsRepository} from "../repositories/blogs-repository";
+import {blogsRepository} from "../repositories/blogs-db-repository";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
 import { inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 
@@ -21,7 +21,7 @@ blogsRouter.get('/',  async (req: Request, res: Response) =>{
         return
     }
 })
-.post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware,async(req:Request, res:Response) => {
+.post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware, async(req:Request, res:Response) => {
    const newBlog = await blogsRepository.createBLog(req.body);
    res.status(201).send(newBlog);
 })
