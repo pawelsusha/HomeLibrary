@@ -16,8 +16,8 @@ exports.runDb = exports.client = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongodb_1 = require("mongodb");
 dotenv_1.default.config();
-//const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
-const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
+const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017';
+//const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
 exports.client = new mongodb_1.MongoClient(mongoURI);
 const runDb = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
