@@ -6,6 +6,8 @@
 /dist/
 /yarn-error.log
 /.env
+.env
+/.env/
 # Editor-based HTTP Client requests
 /httpRequests/
 

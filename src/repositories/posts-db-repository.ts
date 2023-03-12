@@ -1,4 +1,5 @@
 import {Blog, BlogInputModel, blogs, blogsRepository} from '../repositories/blogs-db-repository'
+import {client} from "../db/db";
 export type Post = {
     id: string,
     title: string,
@@ -6,7 +7,7 @@ export type Post = {
     content: string,
     blogId: string,
     blogName: string
-    //createdAt: string
+    createdAt: string
 }
 export type PostInputModel = {
     title: string,
@@ -37,21 +38,12 @@ export let posts = [
 
 export const postsRepository = {
     async returnAllPosts() : Promise<Post[]>{
+        const posts = await client.db().collection<Post>("posts").find({}).toArray()
         return posts
     },
-/*    postsRepository = {
-    findPosts(title: string | null | undefined) {
-        if (title) {
-            let filteredPosts = (posts.filter(p => p.title.indexOf(title) > -1))
-            return filteredPosts
-        } else {
-            return posts
-        }
-    },*/
    async getPostById(id: string): Promise <Post | boolean> {
-        let post = posts.find(p => p.id === id)
+       const post = await client.db().collection<Post>("posts").findOne({id: id})
         if (post) {
-            post.id = id
             return post;
         } else {
             return false;
@@ -65,31 +57,23 @@ export const postsRepository = {
             content: post.content,
             blogId: blogId,
             blogName: blogName,
-           // createdAt:new Date().toISOString()
+            createdAt:new Date().toISOString()
         }
-        posts.push(newPost);
+        const result = await client.db().collection<Post>("posts").insertOne(newPost)
         return newPost;
     },
     async updatePost(id: string, body: PostInputModel): Promise <Post | boolean> {
-        let post = posts.find(p => p.id === id)
-        if (post) {
-            post.title = body.title
-            post.shortDescription = body.shortDescription
-            post.content = body.content
-            return true;
-        } else {
-            return false;
-        }
+        const result = await client.db().collection<Post>("posts")
+            .updateOne({id: id}, {
+                $set: {title: body.title, shortDescription: body.shortDescription, content: body.content},
+            })
+        return result.matchedCount === 1
     },
     async deletePost(id: string): Promise<boolean> {
-        for (let i = 0; i < posts.length; i++) {
-            if (posts[i].id === id) {
-                posts.splice(i, 1);
-                return true;
-            }
-        }
-        return false
+        const result = await client.db().collection<Blog>("blogs").deleteOne({id: id})
+        return result.deletedCount === 1
     }
-
-
 }
+
+
+
