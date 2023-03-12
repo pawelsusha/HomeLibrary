@@ -6,6 +6,7 @@ export type Post = {
     content: string,
     blogId: string,
     blogName: string
+    //createdAt: string
 }
 export type PostInputModel = {
     title: string,
@@ -13,6 +14,7 @@ export type PostInputModel = {
     content: string,
     blogId: string,
     blogName: string
+
 }
 export let posts = [
     {

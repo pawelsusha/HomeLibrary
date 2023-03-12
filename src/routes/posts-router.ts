@@ -42,7 +42,7 @@ postsRouter.get('/:id',
 //Create Post  + Auth
 postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
     console.log(req.body)
-    const blog : Blog | undefined = await blogsRepository.getBlogsById(req.body.blogId)
+    const blog : Blog | undefined | null = await blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
         res.sendStatus(404)
         return

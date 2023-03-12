@@ -28,8 +28,15 @@ exports.blogsRepository = {
     },
     getBlogsById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            let blog = exports.blogs.find(p => p.id === id);
-            return blog;
+            //let blog : Blog | undefined = blogs.find(p => p.id === id);
+            //const blog = await client.db().collection<Blog>("blog").find({id: {$regex: id}}).toArray()
+            const blog = yield db_1.client.db().collection("blogs").findOne({ id: id });
+            if (blog) {
+                return blog;
+            }
+            else {
+                return null;
+            }
         });
     },
     createBLog(blog) {
@@ -38,40 +45,27 @@ exports.blogsRepository = {
                 id: '' + (+(new Date())),
                 name: blog.name,
                 description: blog.description,
-                websiteUrl: blog.websiteUrl
+                websiteUrl: blog.websiteUrl,
+                createdAt: blog.createdAt,
+                isMembership: blog.isMembership
             };
             const result = yield db_1.client.db().collection("blogs").insertOne(newBlog);
             return newBlog;
         });
     },
-    //GET - return by ID
-    /*    async returnBlogById(id: string) : Promise<Blog []> {
-            let blog = blogs.find(p => p.id === id);
-            return blog
-        },*/
     updateBlog(id, body) {
         return __awaiter(this, void 0, void 0, function* () {
-            let blog = exports.blogs.find(b => b.id === id);
-            if (blog) {
-                blog.name = body.name;
-                blog.description = body.description,
-                    blog.websiteUrl = body.websiteUrl;
-                return true;
-            }
-            else {
-                return false;
-            }
+            const result = yield db_1.client.db().collection("blogs")
+                .updateOne({ id: id }, {
+                $set: { name: body.name, description: body.description, websiteUrl: body.websiteUrl },
+            });
+            return result.matchedCount === 1;
         });
     },
     deleteBlog(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            for (let i = 0; i < exports.blogs.length; i++) {
-                if (exports.blogs[i].id === id) {
-                    exports.blogs.splice(i, 1);
-                    return true;
-                }
-            }
-            return false;
+            const result = yield db_1.client.db().collection("blogs").deleteOne({ id: id });
+            return result.deletedCount === 1;
         });
     }
 };
