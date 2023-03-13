@@ -23,7 +23,7 @@ app.delete('/testing/all-data', (req:Request, res: Response ) => {
 })
 
 app.get('/', (req, res) => {
-    res.send('Blog Platform 09Mar2023/2254')
+    res.send('Blog Platform 13Mar2023/1454')
 })
 //app.use(basicAuth)
 
