@@ -5,8 +5,8 @@
 /node_modules/
 /dist/
 /yarn-error.log
-/.env
-.env
-/.env/
+#/.env
+#.env
+#/.env/
 # Editor-based HTTP Client requests
 /httpRequests/
