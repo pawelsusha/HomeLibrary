@@ -57,7 +57,7 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.pos
 }));
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUpdated = yield posts_db_repository_1.postsRepository.updatePost(req.params.id, req.body);
+    const isUpdated = yield posts_db_repository_1.postsRepository.updatePost(req.body, req.params.id);
     if (isUpdated) {
         res.sendStatus(204);
     }

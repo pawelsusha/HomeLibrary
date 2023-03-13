@@ -46,18 +46,18 @@ exports.blogsRepository = {
                 name: blog.name,
                 description: blog.description,
                 websiteUrl: blog.websiteUrl,
-                createdAt: blog.createdAt,
-                isMembership: blog.isMembership
+                createdAt: "" + new Date(),
+                isMembership: false
             };
             const result = yield db_1.client.db().collection("blogs").insertOne(newBlog);
             return newBlog;
         });
     },
-    updateBlog(id, body) {
+    updateBlog(id, blog) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield db_1.client.db().collection("blogs")
                 .updateOne({ id: id }, {
-                $set: { name: body.name, description: body.description, websiteUrl: body.websiteUrl },
+                $set: { name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl },
             });
             return result.matchedCount === 1;
         });
@@ -67,5 +67,12 @@ exports.blogsRepository = {
             const result = yield db_1.client.db().collection("blogs").deleteOne({ id: id });
             return result.deletedCount === 1;
         });
-    }
+    },
+    //delete all data
+    deleteAllData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield db_1.client.db().collection("blogs").deleteMany({});
+            return [];
+        });
+    },
 };
