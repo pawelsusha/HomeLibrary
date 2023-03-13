@@ -1,10 +1,10 @@
 import {Request, Response, Router} from "express";
-import {Post,postsRepository} from "../repositories/posts-repository";
+import {Post,postsRepository} from "../repositories/posts-db-repository";
 import {body, validationResult} from "express-validator";
 import {Blog} from "../repositories/blogs-repository";
 import {postValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 import {inputValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
-import {blogsRepository} from "../repositories/blogs-repository";
+import {blogsRepository} from "../repositories/blogs-db-repository";
 import {blogsRouter} from "./blogs-router";
 
 export const postsRouter = Router({});
@@ -42,7 +42,7 @@ postsRouter.get('/:id',
 //Create Post  + Auth
 postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
     console.log(req.body)
-    const blog : Blog | undefined = await blogsRepository.getBlogsById(req.body.blogId)
+    const blog : Blog | undefined | null = await blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
         res.sendStatus(404)
         return
