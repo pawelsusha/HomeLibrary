@@ -31,7 +31,7 @@ blogsRouter.get('/',  async (req: Request, res: Response) =>{
     if (isUpdated){
         const blog = await blogsRepository.updateBlog(id, req.body)
         //res.send(blog) correct
-        res.send(blog)
+        res.status(204).send(blog);
     }else
         res.send(404)
 })

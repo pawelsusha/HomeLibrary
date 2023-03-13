@@ -47,7 +47,7 @@ exports.blogsRepository = {
                 description: blog.description,
                 websiteUrl: blog.websiteUrl,
                 createdAt: "" + new Date(),
-                isMembership: false
+                isMembership: false,
             };
             const result = yield db_1.client.db().collection("blogs").insertOne(newBlog);
             return newBlog;

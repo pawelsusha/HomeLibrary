@@ -50,7 +50,7 @@ export const blogsRepository = {
             description: blog.description,
             websiteUrl: blog.websiteUrl,
             createdAt: "" + new Date(),
-            isMembership: false
+            isMembership: false,
         }
         const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
         return newBlog;

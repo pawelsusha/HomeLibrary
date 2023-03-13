@@ -42,7 +42,7 @@ exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
     if (isUpdated) {
         const blog = yield blogs_db_repository_1.blogsRepository.updateBlog(id, req.body);
         //res.send(blog) correct
-        res.send(blog);
+        res.status(204).send(blog);
     }
     else
         res.send(404);
