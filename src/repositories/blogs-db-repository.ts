@@ -4,8 +4,6 @@ import {posts} from "./posts-db-repository";
 import {client} from "../db/db";
 import {WithId} from "mongodb";
 
-
-
 export type Blog = {
     id: string,
     name: string,
@@ -51,21 +49,26 @@ export const blogsRepository = {
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
-            createdAt: blog.createdAt,
-            isMembership: blog.isMembership
+            createdAt: "" + new Date(),
+            isMembership: false
         }
         const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
         return newBlog;
     },
-    async updateBlog(id: string, body: BlogInputModel): Promise<boolean> {
+    async updateBlog(id: string, blog: Blog): Promise<boolean> {
         const result = await client.db().collection<Blog>("blogs")
             .updateOne({id: id}, {
-                $set: {name: body.name, description: body.description, websiteUrl: body.websiteUrl},
+                $set: {name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl},
             })
         return result.matchedCount === 1
     },
     async deleteBlog(id: string): Promise<boolean> {
         const result = await client.db().collection<Blog>("blogs").deleteOne({id: id})
         return result.deletedCount === 1
-    }
+    },
+    //delete all data
+    async deleteAllData() {
+        const result = await client.db().collection<Blog>("blogs").deleteMany({})
+        return []
+    },
 }

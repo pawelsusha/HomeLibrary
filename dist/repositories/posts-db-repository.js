@@ -50,7 +50,7 @@ exports.postsRepository = {
     createPost(post, blogId, blogName) {
         return __awaiter(this, void 0, void 0, function* () {
             const newPost = {
-                id: new Date().toISOString(),
+                id: '' + (+(new Date())),
                 title: post.title,
                 shortDescription: post.shortDescription,
                 content: post.content,
@@ -62,19 +62,31 @@ exports.postsRepository = {
             return newPost;
         });
     },
-    updatePost(id, body) {
+    updatePost(post, id) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield db_1.client.db().collection("posts")
                 .updateOne({ id: id }, {
-                $set: { title: body.title, shortDescription: body.shortDescription, content: body.content },
+                $set: {
+                    title: post.title,
+                    shortDescription: post.shortDescription,
+                    content: post.content,
+                    blogId: post.blogId
+                },
             });
             return result.matchedCount === 1;
         });
     },
     deletePost(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("blogs").deleteOne({ id: id });
+            const result = yield db_1.client.db().collection("posts").deleteOne({ id: id });
             return result.deletedCount === 1;
         });
-    }
+    },
+    deleteAllData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield db_1.client.db().collection("posts").deleteMany({});
+            return [];
+            //return posts
+        });
+    },
 };

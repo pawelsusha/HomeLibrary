@@ -54,7 +54,7 @@ postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddle
 
 //Update Post By ID + Auth
 postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddleware, async(req: Request, res: Response) => {
-    const isUpdated = await postsRepository.updatePost(req.params.id, req.body)
+    const isUpdated = await postsRepository.updatePost(req.body, req.params.id)
     if (isUpdated) {
         res.sendStatus(204)
     } else {
