@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const blogs_router_1 = require("./routes/blogs-router");
 const posts_router_1 = require("./routes/posts-router");
-const posts_repository_1 = require("./repositories/posts-repository");
-const blogs_repository_1 = require("./repositories/blogs-repository");
+const posts_db_repository_1 = require("./repositories/posts-db-repository");
+const blogs_db_repository_1 = require("./repositories/blogs-db-repository");
 const db_1 = require("./db/db");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -24,8 +24,8 @@ const port = 3000;
 app.use('/blogs', blogs_router_1.blogsRouter);
 app.use('/posts', posts_router_1.postsRouter);
 app.delete('/testing/all-data', (req, res) => {
-    blogs_repository_1.blogs.splice(0, blogs_repository_1.blogs.length);
-    posts_repository_1.posts.splice(0, posts_repository_1.posts.length);
+    blogs_db_repository_1.blogs.splice(0, blogs_db_repository_1.blogs.length);
+    posts_db_repository_1.posts.splice(0, posts_db_repository_1.posts.length);
     res.send(204);
 });
 app.get('/', (req, res) => {

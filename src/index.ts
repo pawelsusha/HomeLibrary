@@ -1,9 +1,10 @@
 import express, {NextFunction, Request, Response} from 'express';
 import {blogsRouter} from "./routes/blogs-router";
 import {postsRouter} from "./routes/posts-router";
-import {posts} from "./repositories/posts-repository";
-import {blogs} from "./repositories/blogs-repository";
+import {posts} from "./repositories/posts-db-repository";
+import {blogs} from "./repositories/blogs-db-repository";
 import {runDb} from "./db/db";
+
 
 export { NextFunction };
 
@@ -26,12 +27,12 @@ app.get('/', (req, res) => {
 })
 //app.use(basicAuth)
 
-
 const startApp = async() =>{
     await runDb()
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`)
+    })
 }
 startApp()
+
 

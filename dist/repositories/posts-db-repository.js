@@ -13,20 +13,20 @@ exports.postsRepository = exports.posts = void 0;
 const db_1 = require("../db/db");
 exports.posts = [
     {
-        id: "1",
-        title: "first",
-        shortDescription: "firstDesc",
-        content: "firstCont",
-        blogId: "1",
-        blogName: "firstblog"
+        "id": "1",
+        "title": "first",
+        "shortDescription": "firstDesc",
+        "content": "firstCont",
+        "blogId": "1",
+        "blogName": "firstblog"
     },
     {
-        id: "2",
-        title: "second",
-        shortDescription: "secDesc",
-        content: "seccont",
-        blogId: "2",
-        blogName: "second"
+        "id": "2",
+        "title": "second",
+        "shortDescription": "secDesc",
+        "content": "seccont",
+        "blogId": "2",
+        "blogName": "second"
     }
 ];
 exports.postsRepository = {

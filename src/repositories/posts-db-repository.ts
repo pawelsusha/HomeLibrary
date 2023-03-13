@@ -19,25 +19,25 @@ export type PostInputModel = {
 }
 export let posts = [
     {
-        id: "1",
-        title: "first",
-        shortDescription: "firstDesc",
-        content: "firstCont",
-        blogId: "1",
-        blogName : "firstblog"
+        "id": "1",
+        "title": "first",
+        "shortDescription": "firstDesc",
+        "content": "firstCont",
+        "blogId": "1",
+        "blogName" : "firstblog"
     },
     {
-        id: "2",
-        title: "second",
-        shortDescription: "secDesc",
-        content: "seccont",
-        blogId: "2",
-        blogName : "second"
+        "id": "2",
+        "title": "second",
+        "shortDescription": "secDesc",
+        "content": "seccont",
+        "blogId": "2",
+        "blogName" : "second"
     }
 ];
 
 export const postsRepository = {
-    async returnAllPosts() : Promise<Post[]>{
+    async returnAllPosts(): Promise<Post[]> {
         const posts = await client.db().collection<Post>("posts").find({}).toArray()
         return posts
     },
