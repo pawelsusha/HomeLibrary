@@ -39,7 +39,8 @@ exports.postValidationMiddleware = [
     (0, express_validator_1.body)("title").trim().isLength({ min: 1, max: 30 }).isString(),
     (0, express_validator_1.body)("shortDescription").trim().isLength({ min: 1, max: 100 }).isString(),
     (0, express_validator_1.body)("content").trim().isLength({ min: 1, max: 1000 }).isString(),
-    (0, express_validator_1.body)("blogId").isString().trim().notEmpty().custom(exports.findByIdBlogs)
+    //body("blogId").isString().trim().notEmpty().custom(findByIdBlogs)
+    (0, express_validator_1.body)('blogId').trim().custom(exports.findByIdBlogs).isString()
 ];
 exports.blogValidationMiddleware = [
     (0, express_validator_1.body)("name").trim().isLength({ min: 1, max: 15 }).isString(),
