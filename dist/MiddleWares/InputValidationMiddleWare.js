@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.blogValidationMiddleware = exports.postValidationMiddleware = exports.blogIdCheck = exports.contentCheck = exports.shortDescriptionCheck = exports.titleCheck = exports.websiteUrlCheck = exports.descriptionCheck = exports.nameCheck = exports.inputValidationMiddleware = exports.findByIdBlogs = void 0;
-const blogs_repository_1 = require("../repositories/blogs-repository");
+const blogs_db_repository_1 = require("../repositories/blogs-db-repository");
 const express_validator_1 = require("express-validator");
 const findByIdBlogs = (value) => __awaiter(void 0, void 0, void 0, function* () {
-    let blog = yield blogs_repository_1.blogsRepository.getBlogsById(value);
+    let blog = yield blogs_db_repository_1.blogsRepository.getBlogsById(value);
     if (!blog) {
         throw new Error('Invalid blogId');
     }
