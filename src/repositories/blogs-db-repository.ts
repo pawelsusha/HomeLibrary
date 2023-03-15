@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {blogsRouter} from "../routes/blogs-router";
-import {posts} from "./posts-db-repository";
+import {Post, posts} from "./posts-db-repository";
 import {client} from "../db/db";
 import {WithId} from "mongodb";
 
@@ -28,8 +28,9 @@ export let blogs = [
     }
 ];
 export const blogsRepository = {
-    async returnAllBlogs(): Promise<Blog[]> {
-        const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
+        async returnAllBlogs(): Promise<Blog[]> {
+       // const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
+        const blogs = await client.db().collection<Blog>("blogs").find({}, {projection: {_id: 0}}).toArray()
         return blogs
     },
 
