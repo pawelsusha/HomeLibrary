@@ -32,19 +32,14 @@ exports.posts = [
 exports.postsRepository = {
     returnAllPosts() {
         return __awaiter(this, void 0, void 0, function* () {
-            const posts = yield db_1.client.db().collection("posts").find({}).toArray();
+            const posts = yield db_1.client.db().collection("posts").find({}, { projection: { _id: 0 } }).toArray();
             return posts;
         });
     },
     getPostById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const post = yield db_1.client.db().collection("posts").findOne({ id: id });
-            if (post) {
-                return post;
-            }
-            else {
-                return false;
-            }
+            const post = yield db_1.client.db().collection("posts").findOne({ id: id }, { projection: { _id: 0 } });
+            return post;
         });
     },
     createPost(post, blogId, blogName) {
@@ -59,7 +54,7 @@ exports.postsRepository = {
                 createdAt: new Date().toISOString()
             };
             const result = yield db_1.client.db().collection("posts").insertOne(newPost);
-            return newPost;
+            return this.getPostById(newPost.id);
         });
     },
     updatePost(post, id) {

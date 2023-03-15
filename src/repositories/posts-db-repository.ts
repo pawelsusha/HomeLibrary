@@ -39,16 +39,12 @@ export let posts = [
 
 export const postsRepository = {
         async returnAllPosts(): Promise<Post[]> {
-            const posts = await client.db().collection<Post>("posts").find({}).toArray()
+            const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
             return posts
         },
-        async getPostById(id: string): Promise<Post | boolean> {
-            const post = await client.db().collection<Post>("posts").findOne({id: id})
-            if (post) {
-                return post;
-            } else {
-                return false;
-            }
+        async getPostById(id: string): Promise<Post | null> {
+            const post = await client.db().collection<Post>("posts").findOne({id: id}, {projection: {_id: 0}})
+            return post;
         },
         async createPost(post: Post, blogId: string, blogName: string): Promise<Post | null> {
             const newPost: Post = {
@@ -61,7 +57,7 @@ export const postsRepository = {
                 createdAt: new Date().toISOString()
             }
             const result = await client.db().collection<Post>("posts").insertOne(newPost)
-            return newPost;
+            return this.getPostById(newPost.id)
         },
         async updatePost(post: Post, id: string): Promise<Post | boolean> {
             const result = await client.db().collection<Post>("posts")
