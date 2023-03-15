@@ -33,27 +33,23 @@ export const blogsRepository = {
         return blogs
     },
 
-    async getBlogsById(id: string): Promise<Blog | undefined | null> {
+    async getBlogsById(id: string): Promise<Blog | null> {
         //let blog : Blog | undefined = blogs.find(p => p.id === id);
         //const blog = await client.db().collection<Blog>("blog").find({id: {$regex: id}}).toArray()
-        const blog = await client.db().collection<Blog>("blogs").findOne({id: id})
-        if (blog) {
-            return blog
-        } else {
-            return null
-        }
+        const blog = await client.db().collection<Blog>("blogs").findOne({id: id}, {projection: {_id: 0}})
+        return blog;
     },
-    async createBLog(blog: Blog): Promise<Blog> {
+    async createBLog(blog: Blog): Promise<Blog | null> {
         const newBlog = {
             id: '' + (+(new Date())),
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
             createdAt: "" + new Date(),
-            isMembership: false,
+            isMembership: false
         }
         const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
-        return newBlog;
+        return this.getBlogsById(newBlog.id)
     },
     async updateBlog(id: string, blog: Blog): Promise<boolean> {
         const result = await client.db().collection<Blog>("blogs")

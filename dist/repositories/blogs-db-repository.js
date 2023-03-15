@@ -30,13 +30,8 @@ exports.blogsRepository = {
         return __awaiter(this, void 0, void 0, function* () {
             //let blog : Blog | undefined = blogs.find(p => p.id === id);
             //const blog = await client.db().collection<Blog>("blog").find({id: {$regex: id}}).toArray()
-            const blog = yield db_1.client.db().collection("blogs").findOne({ id: id });
-            if (blog) {
-                return blog;
-            }
-            else {
-                return null;
-            }
+            const blog = yield db_1.client.db().collection("blogs").findOne({ id: id }, { projection: { _id: 0 } });
+            return blog;
         });
     },
     createBLog(blog) {
@@ -47,10 +42,10 @@ exports.blogsRepository = {
                 description: blog.description,
                 websiteUrl: blog.websiteUrl,
                 createdAt: "" + new Date(),
-                isMembership: false,
+                isMembership: false
             };
             const result = yield db_1.client.db().collection("blogs").insertOne(newBlog);
-            return newBlog;
+            return this.getBlogsById(newBlog.id);
         });
     },
     updateBlog(id, blog) {
