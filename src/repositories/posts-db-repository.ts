@@ -36,18 +36,18 @@ export let posts = [
         "blogName": "second"
     }
 ];
-
+export const postsCollection = client.db().collection<Post>("posts");
 export const postsRepository = {
         async returnAllPosts(): Promise<Post[]> {
-            const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
+            const posts = await postsCollection.find({}, {projection: {_id: 0}}).toArray()
             return posts
         },
         async getPostById(id: string): Promise<Post | null> {
-            const post = await client.db().collection<Post>("posts").findOne({id: id}, {projection: {_id: 0}})
+            const post = await postsCollection.findOne({id: id}, {projection: {_id: 0}})
             return post;
         },
-        async createPost(post: Post, blogId: string, blogName: string): Promise<Post | null> {
-            const newPost: Post = {
+        async createPost(newPost: Post): Promise<Post | null> {
+           /* const newPost: Post = {
                 id: '' + (+(new Date())),
                 title: post.title,
                 shortDescription: post.shortDescription,
@@ -55,12 +55,13 @@ export const postsRepository = {
                 blogId: blogId,
                 blogName: blogName,
                 createdAt: new Date().toISOString()
-            }
-            const result = await client.db().collection<Post>("posts").insertOne(newPost)
+            }*/
+            const result = await postsCollection.insertOne(newPost)
             return this.getPostById(newPost.id)
+            //return newPost
         },
         async updatePost(post: Post, id: string): Promise<Post | boolean> {
-            const result = await client.db().collection<Post>("posts")
+            const result = await postsCollection
                 .updateOne({id: id}, {
                     $set:
                         {
@@ -73,11 +74,11 @@ export const postsRepository = {
             return result.matchedCount === 1
         },
         async deletePost(id: string): Promise<boolean> {
-            const result = await client.db().collection<Post>("posts").deleteOne({id: id})
+            const result = await postsCollection.deleteOne({id: id})
             return result.deletedCount === 1
         },
         async deleteAllData() {
-            const result = await client.db().collection<Post>("posts").deleteMany({});
+            const result = await postsCollection.deleteMany({});
             return [];
             //return posts
         },

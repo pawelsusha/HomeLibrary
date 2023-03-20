@@ -22,7 +22,8 @@ exports.blogs = [
 exports.blogsRepository = {
     returnAllBlogs() {
         return __awaiter(this, void 0, void 0, function* () {
-            const blogs = yield db_1.client.db().collection("blogs").find({}).toArray();
+            // const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
+            const blogs = yield db_1.client.db().collection("blogs").find({}, { projection: { _id: 0 } }).toArray();
             return blogs;
         });
     },

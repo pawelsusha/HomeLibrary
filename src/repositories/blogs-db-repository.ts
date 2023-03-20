@@ -27,46 +27,39 @@ export let blogs = [
         "websiteUrl": "www.one.by"
     }
 ];
+export const blogsCollection = client.db().collection<Blog>("blogs");
 export const blogsRepository = {
         async returnAllBlogs(): Promise<Blog[]> {
        // const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
-        const blogs = await client.db().collection<Blog>("blogs").find({}, {projection: {_id: 0}}).toArray()
+        const blogs = await blogsCollection.find({}, {projection: {_id: 0}}).toArray()
         return blogs
     },
 
     async getBlogsById(id: string): Promise<Blog | null> {
         //let blog : Blog | undefined = blogs.find(p => p.id === id);
         //const blog = await client.db().collection<Blog>("blog").find({id: {$regex: id}}).toArray()
-        const blog = await client.db().collection<Blog>("blogs").findOne({id: id}, {projection: {_id: 0}})
+        const blog = await blogsCollection.findOne({id: id}, {projection: {_id: 0}})
         return blog;
     },
-    async createBLog(blog: Blog): Promise<Blog | null> {
-        const newBlog = {
-            id: '' + (+(new Date())),
-            name: blog.name,
-            description: blog.description,
-            websiteUrl: blog.websiteUrl,
-            //createdAt: "" + new Date(),
-            createdAt: new Date().toISOString(),
-            isMembership: false
-        }
-        const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
-        return this.getBlogsById(newBlog.id)
+    async createBLog(newBlog: Blog): Promise<Blog | null> {
+        //const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
+        const result = await blogsCollection.insertOne(newBlog)
+        return (newBlog)
     },
     async updateBlog(id: string, blog: Blog): Promise<boolean> {
-        const result = await client.db().collection<Blog>("blogs")
+        const result = await blogsCollection
             .updateOne({id: id}, {
                 $set: {name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl},
             })
         return result.matchedCount === 1
     },
     async deleteBlog(id: string): Promise<boolean> {
-        const result = await client.db().collection<Blog>("blogs").deleteOne({id: id})
+        const result = await blogsCollection.deleteOne({id: id})
         return result.deletedCount === 1
     },
     //delete all data
     async deleteAllData() {
-        const result = await client.db().collection<Blog>("blogs").deleteMany({})
+        const result = await blogsCollection.deleteMany({})
         return []
     },
 }
