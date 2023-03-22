@@ -28,7 +28,7 @@ export let blogs = [
         "websiteUrl": "www.one.by"
     }
 ];
-export const blogsService = {
+export const blogsServices = {
     async returnAllBlogs(): Promise<Blog[]> {
         // const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
         //const blogs = await client.db().collection<Blog>("blogs").find({}, {projection: {_id: 0}}).toArray()

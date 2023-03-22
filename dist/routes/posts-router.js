@@ -15,6 +15,8 @@ const posts_db_repository_1 = require("../repositories/posts-db-repository");
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
 const blogs_db_repository_1 = require("../repositories/blogs-db-repository");
+const posts_services_1 = require("../domain/posts-services");
+//import {blogsServices} from "../domain/blogs-services";
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
@@ -51,7 +53,7 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.pos
         res.sendStatus(404);
         return;
     }
-    const newPost = yield posts_db_repository_1.postsRepository.createPost(req.body, blog.id, blog.name);
+    const newPost = yield posts_services_1.postsService.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost);
     return;
 }));

@@ -6,6 +6,8 @@ import {postValidationMiddleware } from "../MiddleWares/InputValidationMiddleWar
 import {inputValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 import {blogsRepository} from "../repositories/blogs-db-repository";
 import {blogsRouter} from "./blogs-router";
+import {postsService} from "../domain/posts-services";
+//import {blogsServices} from "../domain/blogs-services";
 
 export const postsRouter = Router({});
 export const basicAuth = require('express-basic-auth')
@@ -47,7 +49,7 @@ postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddle
         res.sendStatus(404)
         return
     }
-    const newPost = await postsRepository.createPost(req.body, blog.id, blog.name);
+    const newPost = await postsService.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost)
     return
 })

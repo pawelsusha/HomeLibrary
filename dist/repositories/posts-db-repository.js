@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postsRepository = exports.posts = void 0;
+exports.postsRepository = exports.postsCollection = exports.posts = void 0;
 const db_1 = require("../db/db");
 exports.posts = [
     {
@@ -29,37 +29,39 @@ exports.posts = [
         "blogName": "second"
     }
 ];
+exports.postsCollection = db_1.client.db().collection("posts");
 exports.postsRepository = {
     returnAllPosts() {
         return __awaiter(this, void 0, void 0, function* () {
-            const posts = yield db_1.client.db().collection("posts").find({}, { projection: { _id: 0 } }).toArray();
+            const posts = yield exports.postsCollection.find({}, { projection: { _id: 0 } }).toArray();
             return posts;
         });
     },
     getPostById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const post = yield db_1.client.db().collection("posts").findOne({ id: id }, { projection: { _id: 0 } });
+            const post = yield exports.postsCollection.findOne({ id: id }, { projection: { _id: 0 } });
             return post;
         });
     },
-    createPost(post, blogId, blogName) {
+    createPost(newPost) {
         return __awaiter(this, void 0, void 0, function* () {
-            const newPost = {
-                id: '' + (+(new Date())),
-                title: post.title,
-                shortDescription: post.shortDescription,
-                content: post.content,
-                blogId: blogId,
-                blogName: blogName,
-                createdAt: new Date().toISOString()
-            };
-            const result = yield db_1.client.db().collection("posts").insertOne(newPost);
+            /* const newPost: Post = {
+                 id: '' + (+(new Date())),
+                 title: post.title,
+                 shortDescription: post.shortDescription,
+                 content: post.content,
+                 blogId: blogId,
+                 blogName: blogName,
+                 createdAt: new Date().toISOString()
+             }*/
+            const result = yield exports.postsCollection.insertOne(newPost);
             return this.getPostById(newPost.id);
+            //return newPost
         });
     },
     updatePost(post, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("posts")
+            const result = yield exports.postsCollection
                 .updateOne({ id: id }, {
                 $set: {
                     title: post.title,
@@ -73,13 +75,13 @@ exports.postsRepository = {
     },
     deletePost(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("posts").deleteOne({ id: id });
+            const result = yield exports.postsCollection.deleteOne({ id: id });
             return result.deletedCount === 1;
         });
     },
     deleteAllData() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("posts").deleteMany({});
+            const result = yield exports.postsCollection.deleteMany({});
             return [];
             //return posts
         });
