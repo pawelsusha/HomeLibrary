@@ -88,4 +88,12 @@ exports.blogsRouter.get('/:id/posts', (req, res) => __awaiter(void 0, void 0, vo
         res.sendStatus(404);
         return;
     }
+    let pageSize = pagination_helpers_1.paginationHelpers.pageSize(req.query.pageSize);
+    let pageNumber = pagination_helpers_1.paginationHelpers.pageNumber(req.query.pageNumber);
+    let sortBy = pagination_helpers_1.paginationHelpers.sortBy(req.query.sortBy);
+    let sortDirection = pagination_helpers_1.paginationHelpers.sortDirection(req.query.sortDirection);
+    let allPosts = yield posts_services_1.postsService.returnAllPostByBlogId(pageSize, pageNumber, sortBy, sortDirection, blogId);
+    if (allPosts.items) {
+        res.status(200).send(allPosts);
+    }
 }));

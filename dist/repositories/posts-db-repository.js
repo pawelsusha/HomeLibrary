@@ -86,4 +86,10 @@ exports.postsRepository = {
             //return posts
         });
     },
+    //return all posts by blogId
+    getAllPostsByBlogId(blogId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return exports.postsCollection.find({ blogId }, { projection: { _id: 0 } }).toArray();
+        });
+    }
 };

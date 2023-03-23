@@ -77,4 +77,12 @@ blogsRouter.get('/:id/posts', async (req: Request, res: Response) => {
         res.sendStatus(404)
         return
     }
+    let pageSize : number = paginationHelpers.pageSize(<string>req.query.pageSize);
+    let pageNumber : number = paginationHelpers.pageNumber(<string>req.query.pageNumber);
+    let sortBy : string = paginationHelpers.sortBy(<string>req.query.sortBy);
+    let sortDirection : SortDirection = paginationHelpers.sortDirection(<string>req.query.sortDirection);
+    let allPosts = await postsService.returnAllPostByBlogId(pageSize, pageNumber, sortBy, sortDirection, blogId);
+    if (allPosts.items) {
+        res.status(200).send(allPosts)
+    }
 });

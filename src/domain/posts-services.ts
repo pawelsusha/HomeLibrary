@@ -3,6 +3,7 @@ import {client} from "../db/db";
 import {postsRepository} from '../repositories/posts-db-repository';
 import {QueryRepository} from "../queryRepo";
 import {Paginator} from "../types/types";
+import {SortDirection} from "mongodb";
 
 export type Post = {
     id: string,
@@ -51,6 +52,18 @@ export const postsService = {
         const PageCount = Math.ceil( total / PageSize)
         const Items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection );
         return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, Items)
+    },
+    async returnAllPostByBlogId (PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, blogId: string) : Promise<Paginator>{
+        let total = (await postsRepository.getAllPostsByBlogId(blogId))
+        let totalNumber
+        if (total === null) {
+            totalNumber = 0
+        } else {
+            totalNumber = total.length
+        }
+        const PageCount = Math.ceil( totalNumber / PageSize)
+        const Items = await QueryRepository.PaginatorForPostsByBlogId(PageCount, PageSize, Page, sortBy, sortDirection, blogId);
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, totalNumber, Items)
     },
     async getPostById(id: string): Promise<Post | null> {
         /*const post = await client.db().collection<Post>("posts").findOne({id: id}, {projection: {_id: 0}})
@@ -106,6 +119,10 @@ export const postsService = {
         return [];*/
 
     },
+    //return all posts by blogId
+    async getAllPostsByBlogId(blogId : string) : Promise<Post[]>{
+        return postsRepository.getAllPostsByBlogId(blogId)
+    }
 }
 
 

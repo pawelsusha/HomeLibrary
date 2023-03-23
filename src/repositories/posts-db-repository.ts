@@ -82,6 +82,10 @@ export const postsRepository = {
             return [];
             //return posts
         },
+    //return all posts by blogId
+    async getAllPostsByBlogId(blogId : string) : Promise<Post[]>{
+        return postsCollection.find({blogId}, {projection: {_id: 0}}).toArray()
+    }
     }
 
 
