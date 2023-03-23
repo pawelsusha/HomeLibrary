@@ -15,12 +15,22 @@ const blogs_services_1 = require("../domain/blogs-services");
 const auth_middleware_1 = require("../MiddleWares/auth-middleware");
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 const posts_services_1 = require("../domain/posts-services");
+const pagination_helpers_1 = require("../helpers/pagination-helpers");
 exports.blogsRouter = (0, express_1.Router)({});
 //GET - return all
-exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let allBlogs = yield blogs_services_1.blogsServices.returnAllBlogs();
+/*blogsRouter.get('/',  async (req: Request, res: Response) =>{
+    let allBlogs = await blogsServices.returnAllBlogs();
     res.status(200).send(allBlogs);
-    return;
+    return
+})*/
+exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let pageSize = pagination_helpers_1.paginationHelpers.pageSize(req.query.pageSize);
+    let pageNumber = pagination_helpers_1.paginationHelpers.pageNumber(req.query.pageNumber);
+    let sortBy = pagination_helpers_1.paginationHelpers.sortBy(req.query.sortBy);
+    let sortDirection = pagination_helpers_1.paginationHelpers.sortDirection(req.query.sortDirection);
+    let searchNameTerm = pagination_helpers_1.paginationHelpers.searchNameTerm(req.query.searchNameTerm);
+    let allBlogs = yield blogs_services_1.blogsServices.returnAllBlogs(pageSize, pageNumber, sortBy, sortDirection, searchNameTerm);
+    res.status(200).send(allBlogs);
 }))
     .get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let blog = yield blogs_services_1.blogsServices.getBlogsById(req.params.id);

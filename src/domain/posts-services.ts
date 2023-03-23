@@ -1,6 +1,8 @@
 import {Blog, BlogInputModel, blogs, blogsRepository} from '../repositories/blogs-db-repository'
 import {client} from "../db/db";
 import {postsRepository} from '../repositories/posts-db-repository';
+import {QueryRepository} from "../queryRepo";
+import {Paginator} from "../types/types";
 
 export type Post = {
     id: string,
@@ -39,10 +41,16 @@ export let posts = [
 ];
 
 export const postsService = {
-    async returnAllPosts(): Promise<Post[]> {
-        /*const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
-        return posts*/
+/*    async returnAllPosts(): Promise<Post[]> {
+        /!*const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
+        return posts*!/
         return postsRepository.returnAllPosts();
+    },*/
+    async returnAllPost(PageSize: number, Page: number, sortBy : string, sortDirection: 1 | -1) : Promise<Paginator>{
+        const total = (await postsRepository.returnAllPosts()).length
+        const PageCount = Math.ceil( total / PageSize)
+        const Items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection );
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, Items)
     },
     async getPostById(id: string): Promise<Post | null> {
         /*const post = await client.db().collection<Post>("posts").findOne({id: id}, {projection: {_id: 0}})

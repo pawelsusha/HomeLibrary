@@ -3,16 +3,27 @@ import {Blog, blogsServices} from "../domain/blogs-services";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
 import {inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 import {Post, postsService} from "../domain/posts-services";
-
-
+import {Paginator} from "../types/types";
+import {param} from "express-validator";
+import {SortDirection} from "mongodb";
+import {paginationHelpers} from "../helpers/pagination-helpers";
 
 
 export const blogsRouter = Router({})
 //GET - return all
-blogsRouter.get('/',  async (req: Request, res: Response) =>{
+/*blogsRouter.get('/',  async (req: Request, res: Response) =>{
     let allBlogs = await blogsServices.returnAllBlogs();
     res.status(200).send(allBlogs);
     return
+})*/
+blogsRouter.get('/', async (req: Request, res: Response) =>{
+    let pageSize : number = paginationHelpers.pageSize(<string>req.query.pageSize)
+    let pageNumber : number = paginationHelpers.pageNumber(<string>req.query.pageNumber)
+    let sortBy : string = paginationHelpers.sortBy(<string>req.query.sortBy)
+    let sortDirection : SortDirection = paginationHelpers.sortDirection(<string>req.query.sortDirection)
+    let searchNameTerm : string = paginationHelpers.searchNameTerm(<string>req.query.searchNameTerm)
+    let allBlogs = await blogsServices.returnAllBlogs(pageSize, pageNumber, sortBy, sortDirection, searchNameTerm);
+    res.status(200).send(allBlogs);
 })
 .get('/:id', async(req:Request, res: Response ) => {
     let blog = await blogsServices.getBlogsById(req.params.id)

@@ -29,10 +29,18 @@ export let blogs = [
 ];
 export const blogsCollection = client.db().collection<Blog>("blogs");
 export const blogsRepository = {
+/*
         async returnAllBlogs(): Promise<Blog[]> {
        // const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
         const blogs = await blogsCollection.find({}, {projection: {_id: 0}}).toArray()
         return blogs
+    },
+*/
+    async returnAllBlogs() : Promise<Blog []>{
+        return blogsCollection
+            .find({}, {projection: {_id: 0}})
+            .toArray()
+
     },
 
     async getBlogsById(id: string): Promise<Blog | null> {

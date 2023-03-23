@@ -23,3 +23,6 @@ export const runDb = async () => {
         await client.close()
     }
 };
+
+export class blogsCollection {
+}

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.runDb = exports.client = void 0;
+exports.blogsCollection = exports.runDb = exports.client = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongodb_1 = require("mongodb");
 dotenv_1.default.config();
@@ -36,3 +36,6 @@ const runDb = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.runDb = runDb;
+class blogsCollection {
+}
+exports.blogsCollection = blogsCollection;
