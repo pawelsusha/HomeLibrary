@@ -51,8 +51,9 @@ export const blogsRepository = {
     },
     async createBLog(newBlog: Blog): Promise<Blog | null> {
         //const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
+        //return (newBlog)
         const result = await blogsCollection.insertOne(newBlog)
-        return (newBlog)
+        return this.getBlogsById(newBlog.id)
     },
 /*    async updateBlog(id: string, blog: Blog): Promise<boolean> {
         const result = await blogsCollection
