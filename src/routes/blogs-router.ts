@@ -1,7 +1,11 @@
 import {Request, Response, Router} from "express";
 import {Blog, blogsServices} from "../domain/blogs-services";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
-import {inputValidationMiddleware, blogValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
+import {
+    inputValidationMiddleware,
+    blogValidationMiddleware,
+    postValidationMiddleware
+} from "../MiddleWares/InputValidationMiddleWare"
 import {Post, postsService} from "../domain/posts-services";
 import {Paginator} from "../types/types";
 import {param} from "express-validator";
@@ -65,7 +69,7 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
             res.sendStatus(404)
     })
 //NEW - POST - create post for blog
-blogsRouter.post('/:id/posts', adminAuth,blogValidationMiddleware, inputValidationMiddleware, async (req: Request, res: Response) => {
+blogsRouter.post('/:id/posts', adminAuth,postValidationMiddleware, inputValidationMiddleware, async (req: Request, res: Response) => {
     const blog : Blog | null = await blogsServices.getBlogsById(req.params.id);
     if (!blog) {
         res.sendStatus(404)
