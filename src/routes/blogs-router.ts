@@ -29,10 +29,10 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
     let blog = await blogsServices.getBlogsById(req.params.id)
     if (blog) {
         res.status(200).send(blog);
-        return
+        //return
     } else {
         res.sendStatus(404)
-        return
+       // return
     }
 })
 .post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware, async(req:Request, res:Response) => {

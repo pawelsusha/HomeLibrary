@@ -36,11 +36,11 @@ exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
     let blog = yield blogs_services_1.blogsServices.getBlogsById(req.params.id);
     if (blog) {
         res.status(200).send(blog);
-        return;
+        //return
     }
     else {
         res.sendStatus(404);
-        return;
+        // return
     }
 }))
     .post('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
