@@ -62,13 +62,13 @@ export const blogsServices = {
         const CreatedBlog = await blogsRepository.createBLog(newBlog)
         return CreatedBlog
     },
-    async updateBlog(id: string, blog: Blog): Promise<boolean> {
+    async updateBlogById(blog : Blog, id: string): Promise<boolean> {
         /*const result = await client.db().collection<Blog>("blogs")
             .updateOne({id: id}, {
                 $set: {name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl},
             })
         return result.matchedCount === 1*/
-        return await blogsRepository.updateBlog(id,blog)
+        return await blogsRepository.updateBlogById(blog, id)
 
 
     },

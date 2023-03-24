@@ -29,10 +29,10 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
     let blog = await blogsServices.getBlogsById(req.params.id)
     if (blog) {
         res.status(200).send(blog);
-        //return
+        return
     } else {
         res.sendStatus(404)
-       // return
+        return
     }
 })
 .post('/',adminAuth,blogValidationMiddleware,inputValidationMiddleware, async(req:Request, res:Response) => {
@@ -40,14 +40,21 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
    res.status(201).send(newBlog);
 })
 .put('/:id',adminAuth,blogValidationMiddleware,inputValidationMiddleware,async(req:Request, res:Response) => {
-    const id = req.params.id
+/*    const id = req.params.id
     const isUpdated = await blogsServices.updateBlog(id, req.body)
     if (isUpdated){
         const blog = await blogsServices.updateBlog(id, req.body)
         //res.send(blog) correct
         res.status(204).send(blog);
     }else
+        res.send(404)*/
+    const status : boolean = await blogsServices.updateBlogById(req.body, req.params.id)
+    if (status){
+        res.sendStatus(204)
+    } else {
         res.send(404)
+    }
+
 })
     .delete('/:id', adminAuth, async(req:Request, res: Response) => {
         const id = req.params.id;

@@ -36,11 +36,11 @@ exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
     let blog = yield blogs_services_1.blogsServices.getBlogsById(req.params.id);
     if (blog) {
         res.status(200).send(blog);
-        //return
+        return;
     }
     else {
         res.sendStatus(404);
-        // return
+        return;
     }
 }))
     .post('/', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -48,15 +48,21 @@ exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
     res.status(201).send(newBlog);
 }))
     .put('/:id', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const isUpdated = yield blogs_services_1.blogsServices.updateBlog(id, req.body);
-    if (isUpdated) {
-        const blog = yield blogs_services_1.blogsServices.updateBlog(id, req.body);
-        //res.send(blog) correct
-        res.status(204).send(blog);
+    /*    const id = req.params.id
+        const isUpdated = await blogsServices.updateBlog(id, req.body)
+        if (isUpdated){
+            const blog = await blogsServices.updateBlog(id, req.body)
+            //res.send(blog) correct
+            res.status(204).send(blog);
+        }else
+            res.send(404)*/
+    const status = yield blogs_services_1.blogsServices.updateBlogById(req.body, req.params.id);
+    if (status) {
+        res.sendStatus(204);
     }
-    else
+    else {
         res.send(404);
+    }
 }))
     .delete('/:id', auth_middleware_1.adminAuth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;

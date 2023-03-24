@@ -54,11 +54,15 @@ export const blogsRepository = {
         const result = await blogsCollection.insertOne(newBlog)
         return (newBlog)
     },
-    async updateBlog(id: string, blog: Blog): Promise<boolean> {
+/*    async updateBlog(id: string, blog: Blog): Promise<boolean> {
         const result = await blogsCollection
             .updateOne({id: id}, {
                 $set: {name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl},
             })
+        return result.matchedCount === 1
+    },*/
+    async updateBlogById(blog : Blog, id: string) : Promise <boolean>{
+        const result = await blogsCollection.updateOne({id: id}, { $set: blog})
         return result.matchedCount === 1
     },
     async deleteBlog(id: string): Promise<boolean> {

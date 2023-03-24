@@ -50,12 +50,16 @@ exports.blogsRepository = {
             return (newBlog);
         });
     },
-    updateBlog(id, blog) {
+    /*    async updateBlog(id: string, blog: Blog): Promise<boolean> {
+            const result = await blogsCollection
+                .updateOne({id: id}, {
+                    $set: {name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl},
+                })
+            return result.matchedCount === 1
+        },*/
+    updateBlogById(blog, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield exports.blogsCollection
-                .updateOne({ id: id }, {
-                $set: { name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl },
-            });
+            const result = yield exports.blogsCollection.updateOne({ id: id }, { $set: blog });
             return result.matchedCount === 1;
         });
     },
