@@ -46,8 +46,9 @@ exports.blogsRepository = {
     createBLog(newBlog) {
         return __awaiter(this, void 0, void 0, function* () {
             //const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
+            //return (newBlog)
             const result = yield exports.blogsCollection.insertOne(newBlog);
-            return (newBlog);
+            return this.getBlogsById(newBlog.id);
         });
     },
     /*    async updateBlog(id: string, blog: Blog): Promise<boolean> {

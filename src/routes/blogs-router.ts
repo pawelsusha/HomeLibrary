@@ -66,12 +66,12 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
     })
 //NEW - POST - create post for blog
 blogsRouter.post('/:id/posts', adminAuth,blogValidationMiddleware, inputValidationMiddleware, async (req: Request, res: Response) => {
-    const foundBlog : Blog | null = await blogsServices.getBlogsById(req.params.id);
-    if (!foundBlog) {
+    const blog : Blog | null = await blogsServices.getBlogsById(req.params.id);
+    if (!blog) {
         res.sendStatus(404)
     } else {
-        const blogId = foundBlog.id;
-        const blogName = foundBlog.name;
+        const blogId = blog.id;
+        const blogName = blog.name;
         const newPost : Post | null = await postsService.createPost(req.body, blogName, blogId);
         res.status(201).send(newPost)
     }
@@ -79,8 +79,8 @@ blogsRouter.post('/:id/posts', adminAuth,blogValidationMiddleware, inputValidati
 //NEW - GET - get all posts in blog
 blogsRouter.get('/:id/posts', async (req: Request, res: Response) => {
     const blogId = req.params.id;
-    const foundBlog: Blog | null = await blogsServices.getBlogsById(blogId);
-    if (!foundBlog) {
+    const blog: Blog | null = await blogsServices.getBlogsById(blogId);
+    if (!blog) {
         res.sendStatus(404)
         return
     }

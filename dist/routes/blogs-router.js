@@ -75,13 +75,13 @@ exports.blogsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
 }));
 //NEW - POST - create post for blog
 exports.blogsRouter.post('/:id/posts', auth_middleware_1.adminAuth, InputValidationMiddleWare_1.blogValidationMiddleware, InputValidationMiddleWare_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const foundBlog = yield blogs_services_1.blogsServices.getBlogsById(req.params.id);
-    if (!foundBlog) {
+    const blog = yield blogs_services_1.blogsServices.getBlogsById(req.params.id);
+    if (!blog) {
         res.sendStatus(404);
     }
     else {
-        const blogId = foundBlog.id;
-        const blogName = foundBlog.name;
+        const blogId = blog.id;
+        const blogName = blog.name;
         const newPost = yield posts_services_1.postsService.createPost(req.body, blogName, blogId);
         res.status(201).send(newPost);
     }
@@ -89,8 +89,8 @@ exports.blogsRouter.post('/:id/posts', auth_middleware_1.adminAuth, InputValidat
 //NEW - GET - get all posts in blog
 exports.blogsRouter.get('/:id/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const blogId = req.params.id;
-    const foundBlog = yield blogs_services_1.blogsServices.getBlogsById(blogId);
-    if (!foundBlog) {
+    const blog = yield blogs_services_1.blogsServices.getBlogsById(blogId);
+    if (!blog) {
         res.sendStatus(404);
         return;
     }
