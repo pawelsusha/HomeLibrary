@@ -58,7 +58,7 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
             res.sendStatus(404)
     })
 //NEW - POST - create post for blog
-blogsRouter.post('/:id/posts', adminAuth, inputValidationMiddleware, async (req: Request, res: Response) => {
+blogsRouter.post('/:id/posts', adminAuth,blogValidationMiddleware, inputValidationMiddleware, async (req: Request, res: Response) => {
     const foundBlog : Blog | null = await blogsServices.getBlogsById(req.params.id);
     if (!foundBlog) {
         res.sendStatus(404)
