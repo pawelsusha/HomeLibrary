@@ -1,14 +1,8 @@
 import {Request, Response, Router} from "express";
 import {Blog, blogsServices} from "../domain/blogs-services";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
-import {
-    inputValidationMiddleware,
-    blogValidationMiddleware,
-    postValidationMiddleware
-} from "../MiddleWares/InputValidationMiddleWare"
+import {inputValidationMiddleware,blogValidationMiddleware,postValidationMiddleware} from "../MiddleWares/InputValidationMiddleWare"
 import {Post, postsService} from "../domain/posts-services";
-import {Paginator} from "../types/types";
-import {param} from "express-validator";
 import {SortDirection} from "mongodb";
 import {paginationHelpers} from "../helpers/pagination-helpers";
 
@@ -78,6 +72,7 @@ blogsRouter.post('/:id/posts', adminAuth,postValidationMiddleware, inputValidati
         const blogName = blog.name;
         const newPost : Post | null = await postsService.createPost(req.body, blogName, blogId);
         res.status(201).send(newPost)
+        return
     }
 });
 //NEW - GET - get all posts in blog
