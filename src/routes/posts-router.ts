@@ -53,7 +53,7 @@ postsRouter.get('/:id',
     }
 })
 //Create Post  + Auth
-/*postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
+postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
     console.log(req.body)
     const blog : Blog | undefined | null = await blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
@@ -63,8 +63,8 @@ postsRouter.get('/:id',
     const newPost = await postsService.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost)
     return
-})*/
-postsRouter.post('/',
+})
+/*postsRouter.post('/',
     adminAuth,
     titleCheck,
     shortDescriptionCheck,
@@ -82,7 +82,7 @@ postsRouter.post('/',
     const newPost : Post | null = await postsService.createPost(req.body, blog.id, blog.name);
         console.log(newPost)
     res.status(201).send(newPost)
-}})
+}})*/
 //Update Post By ID + Auth
 postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddleware, async(req: Request, res: Response) => {
     const isUpdated = await postsRepository.updatePost(req.body, req.params.id)
