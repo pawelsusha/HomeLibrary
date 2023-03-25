@@ -2,13 +2,19 @@ import {Request, Response, Router} from "express";
 import {Post,postsRepository} from "../repositories/posts-db-repository";
 import {body, validationResult} from "express-validator";
 import {Blog} from "../repositories/blogs-repository";
-import {postValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
+import {
+    blogIdCheck,
+    contentCheck,
+    postValidationMiddleware,
+    shortDescriptionCheck, titleCheck
+} from "../MiddleWares/InputValidationMiddleWare"
 import {inputValidationMiddleware } from "../MiddleWares/InputValidationMiddleWare"
 import {blogsRepository} from "../repositories/blogs-db-repository";
 import {blogsRouter} from "./blogs-router";
 import {postsService} from "../domain/posts-services";
 import {SortDirection} from "mongodb";
 import {paginationHelpers} from "../helpers/pagination-helpers";
+import {blogsServices} from "../domain/blogs-services";
 //import {blogsServices} from "../domain/blogs-services";
 
 
@@ -47,7 +53,7 @@ postsRouter.get('/:id',
     }
 })
 //Create Post  + Auth
-postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
+/*postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
     console.log(req.body)
     const blog : Blog | undefined | null = await blogsRepository.getBlogsById(req.body.blogId)
     if(!blog) {
@@ -57,8 +63,26 @@ postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddle
     const newPost = await postsService.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost)
     return
-})
-
+})*/
+postsRouter.post('/',
+    adminAuth,
+    titleCheck,
+    shortDescriptionCheck,
+    contentCheck,
+    blogIdCheck,
+    inputValidationMiddleware,
+    async (req: Request, res: Response) => {
+    console.log(req.body)
+    const blog : Blog | undefined | null = await blogsServices.getBlogsById(req.body.blogId)
+    if(blog=== null) {
+        res.sendStatus(404)
+    }else {
+        const blogId = blog.id
+        const blogName = blog.name
+    const newPost : Post | null = await postsService.createPost(req.body, blog.id, blog.name);
+        console.log(newPost)
+    res.status(201).send(newPost)
+}})
 //Update Post By ID + Auth
 postsRouter.put('/:id', adminAuth,postValidationMiddleware,inputValidationMiddleware, async(req: Request, res: Response) => {
     const isUpdated = await postsRepository.updatePost(req.body, req.params.id)
