@@ -32,29 +32,29 @@ export const paginationHelpers = {
             return -1;
         }
     },
-/*    //searchNameTerm, no default
+   //searchNameTerm, no default
     searchNameTerm (name : string | undefined) : string {
         if (!name){
-            return " ";
+            return "testerror";
         } else {
             //count matches
             return name;
         }
     },
-    searchLoginTerm (login : string | undefined) : string {
-        if (!login){
-            return "";
-        } else {
-            //count matches
-            return login;
-        }
-    },
-    searchEmailTerm (email : string | undefined) : string {
-        if (!email){
-            return " ";
-        } else {
-            //count matches
-            return email;
-        }
-    }*/
+    /*     searchLoginTerm (login : string | undefined) : string {
+            if (!login){
+                return "";
+            } else {
+                //count matches
+                return login;
+            }
+        },
+        searchEmailTerm (email : string | undefined) : string {
+            if (!email){
+                return " ";
+            } else {
+                //count matches
+                return email;
+            }
+        }*/
 }
