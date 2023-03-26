@@ -1,7 +1,12 @@
 import {Request, Response, Router} from "express";
 import {Blog, blogsServices} from "../domain/blogs-services";
 import {adminAuth, } from "../MiddleWares/auth-middleware";
-import {inputValidationMiddleware,blogValidationMiddleware,postValidationMiddleware} from "../MiddleWares/InputValidationMiddleWare"
+import {
+    inputValidationMiddleware,
+    blogValidationMiddleware,
+    postValidationMiddleware,
+    titleCheck, shortDescriptionCheck, contentCheck
+} from "../MiddleWares/InputValidationMiddleWare"
 import {Post, postsService} from "../domain/posts-services";
 import {SortDirection} from "mongodb";
 import {paginationHelpers} from "../helpers/pagination-helpers";
@@ -63,7 +68,7 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
             res.sendStatus(404)
     })
 //NEW - POST - create post for blog
-blogsRouter.post('/:id/posts', adminAuth,postValidationMiddleware, inputValidationMiddleware, async (req: Request, res: Response) => {
+blogsRouter.post('/:id/posts', adminAuth,titleCheck,shortDescriptionCheck,contentCheck,inputValidationMiddleware, async (req: Request, res: Response) => {
     const blog : Blog | null = await blogsServices.getBlogsById(req.params.id);
     if (!blog) {
         res.sendStatus(404)

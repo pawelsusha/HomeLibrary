@@ -14,9 +14,9 @@ const express_1 = require("express");
 const posts_db_repository_1 = require("../repositories/posts-db-repository");
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
+const blogs_db_repository_1 = require("../repositories/blogs-db-repository");
 const posts_services_1 = require("../domain/posts-services");
 const pagination_helpers_1 = require("../helpers/pagination-helpers");
-const blogs_services_1 = require("../domain/blogs-services");
 //import {blogsServices} from "../domain/blogs-services";
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
@@ -50,31 +50,36 @@ exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 //Create Post  + Auth
-/*postsRouter.post('/', adminAuth, postValidationMiddleware, inputValidationMiddleware, async(req: Request, res: Response) => {
-    console.log(req.body)
-    const blog : Blog | undefined | null = await blogsRepository.getBlogsById(req.body.blogId)
-    if(!blog) {
-        res.sendStatus(404)
-        return
-    }
-    const newPost = await postsService.createPost(req.body, blog.id, blog.name);
-    res.status(201).send(newPost)
-    return
-})*/
-exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.titleCheck, InputValidationMiddleWare_1.shortDescriptionCheck, InputValidationMiddleWare_1.contentCheck, InputValidationMiddleWare_1.blogIdCheck, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
-    const blog = yield blogs_services_1.blogsServices.getBlogsById(req.body.blogId);
-    if (blog === null) {
+    const blog = yield blogs_db_repository_1.blogsRepository.getBlogsById(req.body.blogId);
+    if (!blog) {
         res.sendStatus(404);
+        return;
     }
-    else {
-        const blogId = blog.id;
-        const blogName = blog.name;
-        const newPost = yield posts_services_1.postsService.createPost(req.body, blog.id, blog.name);
-        console.log(newPost);
-        res.status(201).send(newPost);
-    }
+    const newPost = yield posts_services_1.postsService.createPost(req.body, blog.id, blog.name);
+    res.status(201).send(newPost);
+    return;
 }));
+/*postsRouter.post('/',
+    adminAuth,
+    titleCheck,
+    shortDescriptionCheck,
+    contentCheck,
+    blogIdCheck,
+    inputValidationMiddleware,
+    async (req: Request, res: Response) => {
+    console.log(req.body)
+    const blog : Blog | undefined | null = await blogsServices.getBlogsById(req.body.blogId)
+    if(blog=== null) {
+        res.sendStatus(404)
+    }else {
+        const blogId = blog.id
+        const blogName = blog.name
+    const newPost : Post | null = await postsService.createPost(req.body, blog.id, blog.name);
+        console.log(newPost)
+    res.status(201).send(newPost)
+}})*/
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isUpdated = yield posts_db_repository_1.postsRepository.updatePost(req.body, req.params.id);

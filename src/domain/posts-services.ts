@@ -119,10 +119,10 @@ export const postsService = {
         return [];*/
 
     },
-    //return all posts by blogId
+    /*//return all posts by blogId
     async getAllPostsByBlogId(blogId : string) : Promise<Post[]>{
         return postsRepository.getAllPostsByBlogId(blogId)
-    }
+    }*/
 }
 
 
