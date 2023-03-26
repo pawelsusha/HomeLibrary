@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {blogsRouter} from "../routes/blogs-router";
 //import {Post, posts} from "./posts-db-repository";
 import {client} from "../db/db";
-import {WithId} from "mongodb";
+import {SortDirection, WithId} from "mongodb";
 import {blogsRepository} from '../repositories/blogs-db-repository';
 import {QueryRepository} from "../queryRepo";
 import {Paginator} from "../types/types";
@@ -34,7 +34,7 @@ export const blogsServices = {
     /*async returnAllBlogs(): Promise<Blog[]> {
         return blogsRepository.returnAllBlogs();
     },*/
-    async returnAllBlogs(PageSize: number, Page: number, sortBy : string, sortDirection: 1 | -1, searchNameTerm : string ) : Promise<Paginator>{
+    async returnAllBlogs(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, searchNameTerm : string ) : Promise<Paginator>{
         const total = (await blogsRepository.returnAllBlogs()).length
         const PageCount = Math.ceil( total / PageSize)
         const Items = await QueryRepository.PaginatorForBlogs(PageCount, PageSize, Page, sortBy, sortDirection, searchNameTerm);
