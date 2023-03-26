@@ -35,7 +35,7 @@ export const paginationHelpers = {
    //searchNameTerm, no default
     searchNameTerm (name : string | undefined) : string {
         if (!name){
-            return "testerror";
+            return "";
         } else {
             //count matches
             return name;
