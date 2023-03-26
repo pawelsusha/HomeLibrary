@@ -32,10 +32,10 @@ export const paginationHelpers = {
             return -1;
         }
     },
-    //searchNameTerm, no default
+/*    //searchNameTerm, no default
     searchNameTerm (name : string | undefined) : string {
         if (!name){
-            return "";
+            return " ";
         } else {
             //count matches
             return name;
@@ -51,10 +51,10 @@ export const paginationHelpers = {
     },
     searchEmailTerm (email : string | undefined) : string {
         if (!email){
-            return "";
+            return " ";
         } else {
             //count matches
             return email;
         }
-    }
+    }*/
 }
