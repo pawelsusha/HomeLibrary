@@ -6,7 +6,7 @@ import {SortDirection} from "mongodb";
 
 export const QueryRepository = {
     async PaginatorForBlogs (PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, searchNameTerm : string) : Promise <Blog[]> {
-        const skipSize: number = PageSize * (Page - 1)
+        const skipSize: number = ((Page - 1) * PageSize)
         return blogsCollection
             .find({name: {$regex: searchNameTerm, $options : 'i'}}, {projection: {_id: 0}})
             .sort({[sortBy] : sortDirection})
@@ -15,7 +15,7 @@ export const QueryRepository = {
             .toArray()
     },
     async PaginatorForPosts (PageCount: number, PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection) : Promise <Post[]> {
-        const skipSize: number = PageSize * (Page - 1)
+        const skipSize: number = ((Page - 1) * PageSize)
         return postsCollection
             .find({}, {projection: {_id: 0}})
             .sort({[sortBy] : sortDirection})
@@ -24,7 +24,7 @@ export const QueryRepository = {
             .toArray()
     },
     async PaginatorForPostsByBlogId(PageCount: number, PageSize: number, Page: number, sortBy: string, sortDirection: SortDirection, blogId: string): Promise<Post[]> {
-        const skipSize: number = PageSize * (Page - 1)
+        const skipSize: number = ((Page - 1) * PageSize)
         return postsCollection
             .find({blogId: blogId}, {projection: {_id: 0}})
             .sort({[sortBy]: sortDirection})

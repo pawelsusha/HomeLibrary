@@ -37,8 +37,8 @@ export const blogsServices = {
     async returnAllBlogs(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, searchNameTerm : string ) : Promise<Paginator>{
         const total = await blogsRepository.returnAllBlogs(searchNameTerm)
         const PageCount = Math.ceil( total / PageSize)
-        const Items = await QueryRepository.PaginatorForBlogs(PageSize, Page, sortBy, sortDirection, searchNameTerm);
-        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, Items)
+        const items = await QueryRepository.PaginatorForBlogs(PageSize, Page, sortBy, sortDirection, searchNameTerm);
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, items)
     },
 
     async getBlogsById(id: string): Promise<Blog | null> {
