@@ -28,11 +28,10 @@ exports.blogsRepository = {
             return blogs
         },
     */
-    returnAllBlogs() {
+    returnAllBlogs(searchNameTerm) {
         return __awaiter(this, void 0, void 0, function* () {
             return exports.blogsCollection
-                .find({}, { projection: { _id: 0 } })
-                .toArray();
+                .countDocuments({ name: { $regex: searchNameTerm, $options: 'i' } });
         });
     },
     getBlogsById(id) {

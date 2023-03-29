@@ -38,9 +38,8 @@ export let posts = [
 ];
 export const postsCollection = client.db().collection<Post>("posts");
 export const postsRepository = {
-        async returnAllPosts(): Promise<Post[]> {
-            const posts = await postsCollection.find({}, {projection: {_id: 0}}).toArray()
-            return posts
+        async returnAllPosts(): Promise<number> {
+            return postsCollection.countDocuments({})
         },
         async getPostById(id: string): Promise<Post | null> {
             const post = await postsCollection.findOne({id: id}, {projection: {_id: 0}})

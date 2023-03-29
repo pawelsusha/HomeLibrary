@@ -33,8 +33,7 @@ exports.postsCollection = db_1.client.db().collection("posts");
 exports.postsRepository = {
     returnAllPosts() {
         return __awaiter(this, void 0, void 0, function* () {
-            const posts = yield exports.postsCollection.find({}, { projection: { _id: 0 } }).toArray();
-            return posts;
+            return exports.postsCollection.countDocuments({});
         });
     },
     getPostById(id) {

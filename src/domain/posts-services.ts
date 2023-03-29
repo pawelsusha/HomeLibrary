@@ -48,7 +48,7 @@ export const postsService = {
         return postsRepository.returnAllPosts();
     },*/
     async returnAllPost(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection) : Promise<Paginator>{
-        const total = (await postsRepository.returnAllPosts()).length
+        const total = await postsRepository.returnAllPosts()
         const PageCount = Math.ceil( total / PageSize)
         const Items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection );
         console.log(Items)

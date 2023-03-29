@@ -36,11 +36,9 @@ export const blogsRepository = {
         return blogs
     },
 */
-    async returnAllBlogs() : Promise<Blog []>{
+    async returnAllBlogs(searchNameTerm: string) : Promise<number>{
         return blogsCollection
-            .find({}, {projection: {_id: 0}})
-            .toArray()
-
+            .countDocuments({name: {$regex: searchNameTerm, $options: 'i' }})
     },
 
     async getBlogsById(id: string): Promise<Blog | null> {
