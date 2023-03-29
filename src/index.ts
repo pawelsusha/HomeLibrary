@@ -9,8 +9,8 @@ import {runDb} from "./db/db";
 
 export { NextFunction };
 
-export const app = express()
-app.use(express.json())
+export const app = express();
+app.use(express.json());
 
 const port = 3000
 app.use('/blogs', blogsRouter)

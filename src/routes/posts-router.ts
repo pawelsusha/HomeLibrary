@@ -23,13 +23,7 @@ export const basicAuth = require('express-basic-auth')
 export const adminAuth = basicAuth({users: { 'admin': 'qwerty' }});
 
 
-//Get All Posts By no auth
-/*postsRouter.get('/', (req: Request, res: Response) => {
-    const foundPosts = postsRepository.findPosts(req.query.title
-        ? req.query.toString()
-        : null);
-    res.status(200).send(foundPosts)
-})*/
+
 //Get All Posts By no auth
 postsRouter.get('/', async (req: Request, res: Response) =>{
 let pageSize : number = paginationHelpers.pageSize(<string>req.query.pageSize);

@@ -43,14 +43,15 @@ export let posts = [
 
 export const postsService = {
 /*    async returnAllPosts(): Promise<Post[]> {
-        /!*const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
-        return posts*!/
+        //const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
+        //return posts
         return postsRepository.returnAllPosts();
     },*/
     async returnAllPost(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection) : Promise<Paginator>{
         const total = (await postsRepository.returnAllPosts()).length
         const PageCount = Math.ceil( total / PageSize)
         const Items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection );
+        console.log(Items)
         return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, Items)
     },
     async returnAllPostByBlogId (PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, blogId: string) : Promise<Paginator>{
@@ -119,10 +120,10 @@ export const postsService = {
         return [];*/
 
     },
-    /*//return all posts by blogId
+    //return all posts by blogId
     async getAllPostsByBlogId(blogId : string) : Promise<Post[]>{
         return postsRepository.getAllPostsByBlogId(blogId)
-    }*/
+    }
 }
 
 

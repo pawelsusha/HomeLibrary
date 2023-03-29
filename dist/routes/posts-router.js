@@ -22,13 +22,6 @@ exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
 //Get All Posts By no auth
-/*postsRouter.get('/', (req: Request, res: Response) => {
-    const foundPosts = postsRepository.findPosts(req.query.title
-        ? req.query.toString()
-        : null);
-    res.status(200).send(foundPosts)
-})*/
-//Get All Posts By no auth
 exports.postsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let pageSize = pagination_helpers_1.paginationHelpers.pageSize(req.query.pageSize);
     let pageNumber = pagination_helpers_1.paginationHelpers.pageNumber(req.query.pageNumber);

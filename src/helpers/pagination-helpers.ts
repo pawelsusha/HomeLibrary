@@ -40,7 +40,7 @@ export const paginationHelpers = {
             //count matches
             return name;
         }
-    },
+    }
     /*     searchLoginTerm (login : string | undefined) : string {
             if (!login){
                 return "";
