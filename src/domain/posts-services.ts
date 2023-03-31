@@ -4,6 +4,7 @@ import {postsRepository} from '../repositories/posts-db-repository';
 import {QueryRepository} from "../queryRepo";
 import {Paginator} from "../types/types";
 import {SortDirection} from "mongodb";
+import {log} from "util";
 
 export type Post = {
     id: string,
@@ -50,7 +51,7 @@ export const postsService = {
     async returnAllPost(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection) : Promise<Paginator>{
         const total = await postsRepository.returnAllPosts()
         const PageCount = Math.ceil( total / PageSize)
-        const items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection );
+        const items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection);
         console.log(items)
         return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, items)
     },
