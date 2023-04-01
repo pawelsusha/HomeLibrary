@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import {MongoClient} from "mongodb";
 dotenv.config()
-const mongoURI: string | undefined = process.env.MONGO_URL /*|| 'mongodb://0.0.0.0:27017'*/
+const mongoURI: string | undefined = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 //const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
 
 

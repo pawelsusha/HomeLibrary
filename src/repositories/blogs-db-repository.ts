@@ -40,7 +40,6 @@ export const blogsRepository = {
         return blogsCollection
             .countDocuments({name: {$regex: searchNameTerm, $options: 'i' }})
     },
-
     async getBlogsById(id: string): Promise<Blog | null> {
         //let blog : Blog | undefined = blogs.find(p => p.id === id);
         //const blog = await client.db().collection<Blog>("blog").find({id: {$regex: id}}).toArray()

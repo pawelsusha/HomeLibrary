@@ -25,7 +25,7 @@ blogsRouter.get('/', async (req: Request, res: Response) =>{
     let sortBy : string = paginationHelpers.sortBy(<string>req.query.sortBy)
     let sortDirection : SortDirection = paginationHelpers.sortDirection(<string>req.query.sortDirection)
     let searchNameTerm : string = paginationHelpers.searchNameTerm(<string>req.query.searchNameTerm)
-    let allBlogs = await blogsServices.returnAllBlogs(pageSize, pageNumber, sortBy, sortDirection, searchNameTerm);
+    let allBlogs = await blogsServices.returnAllBlogs(pageSize, pageNumber, sortBy, sortDirection,searchNameTerm);
     res.status(200).send(allBlogs);
 })
 .get('/:id', async(req:Request, res: Response ) => {
