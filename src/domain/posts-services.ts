@@ -49,19 +49,20 @@ export const postsService = {
         return postsRepository.returnAllPosts();
     },*/
     async returnAllPost(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection) : Promise<Paginator>{
-        const total = await postsRepository.returnAllPosts()
+        const total = (await postsRepository.returnAllPosts())
+        //const total = await postsRepository.returnAllPosts()
         const PageCount = Math.ceil( total / PageSize)
-        const items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection);
-        console.log(items)
-        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, items)
+        const Items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection);
+        console.log(Items)
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, Items)
     },
     async returnAllPostByBlogId (PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, blogId: string) : Promise<Paginator>{
-        let Total = (await postsRepository.getAllPostsByBlogId(blogId))
+        let total = (await postsRepository.getAllPostsByBlogId(blogId))
         let totalNumber
-        if (Total === null) {
+        if (total === null) {
             totalNumber = 0
         } else {
-            totalNumber = Total.length
+            totalNumber = total.length
         }
         const PageCount = Math.ceil( totalNumber / PageSize)
         const Items = await QueryRepository.PaginatorForPostsByBlogId(PageCount, PageSize, Page, sortBy, sortDirection, blogId);
