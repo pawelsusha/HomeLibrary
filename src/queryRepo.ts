@@ -27,8 +27,8 @@ export const QueryRepository = {
     async PaginatorForPostsByBlogId(PageCount: number, PageSize: number, Page: number, sortBy: string, sortDirection: SortDirection, blogId: string): Promise<Post[]> {
         const skipSize: number = ((Page - 1) * PageSize)
         return postsCollection
-            //.find({}, {projection: {_id: 0,__v: 0}})
-            .find({blogId: blogId})
+            .find({}, {projection: {_id: 0,__v: 0}})
+            //.find({blogId: blogId},{projection: {_id: 0,__v: 0}})),
             //.find({blogName: {$regex: blogName, $options : 'i'}}, {projection: {_id: 0}})
             .sort({[sortBy]: sortDirection})
             .skip(skipSize)
