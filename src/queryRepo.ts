@@ -28,8 +28,8 @@ export const QueryRepository = {
         const skipSize: number = ((Page - 1) * PageSize)
         return postsCollection
             //.find({}, {projection: {_id: 0,__v: 0}})
-            .find({blogId: blogId}, {projection: {_id: 0,__v: 0}})
-            //.find({name: {$regex: searchNameTerm, $options : 'i'}}, {projection: {_id: 0}})
+            //.find({blogId: blogId}, {projection: {_id: 0,__v: 0}})
+            .find({blogId: {$regex: blogId, $options : 'i'}}, {projection: {_id: 0}})
             .sort({[sortBy]: sortDirection})
             .skip(skipSize)
             .limit(PageSize)
