@@ -56,16 +56,16 @@ export const postsService = {
         return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, items)
     },
     async returnAllPostByBlogId (PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, blogId: string) : Promise<Paginator>{
-        let total = (await postsRepository.getAllPostsByBlogId(blogId))
+        let Total = (await postsRepository.getAllPostsByBlogId(blogId))
         let totalNumber
-        if (total === null) {
+        if (Total === null) {
             totalNumber = 0
         } else {
-            totalNumber = total.length
+            totalNumber = Total.length
         }
         const PageCount = Math.ceil( totalNumber / PageSize)
-        const items = await QueryRepository.PaginatorForPostsByBlogId(PageCount, PageSize, Page, sortBy, sortDirection, blogId);
-        return QueryRepository.PaginationForm(PageCount, PageSize, Page, totalNumber, items)
+        const Items = await QueryRepository.PaginatorForPostsByBlogId(PageCount, PageSize, Page, sortBy, sortDirection, blogId);
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, totalNumber, Items)
     },
     async getPostById(id: string): Promise<Post | null> {
         /*const post = await client.db().collection<Post>("posts").findOne({id: id}, {projection: {_id: 0}})
