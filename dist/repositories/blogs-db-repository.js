@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.blogsRepository = exports.blogs = void 0;
+exports.blogsRepository = exports.blogsCollection = exports.blogs = void 0;
 const db_1 = require("../db/db");
 exports.blogs = [
     {
@@ -19,59 +19,60 @@ exports.blogs = [
         "websiteUrl": "www.one.by"
     }
 ];
+exports.blogsCollection = db_1.client.db().collection("blogs");
 exports.blogsRepository = {
-    returnAllBlogs() {
+    /*
+            async returnAllBlogs(): Promise<Blog[]> {
+           // const blogs = await client.db().collection<Blog>("blogs").find({}).toArray()
+            const blogs = await blogsCollection.find({}, {projection: {_id: 0}}).toArray()
+            return blogs
+        },
+    */
+    returnAllBlogs(searchNameTerm) {
         return __awaiter(this, void 0, void 0, function* () {
-            const blogs = yield db_1.client.db().collection("blogs").find({}).toArray();
-            return blogs;
+            return exports.blogsCollection
+                .countDocuments({ name: { $regex: searchNameTerm, $options: 'i' } });
         });
     },
     getBlogsById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             //let blog : Blog | undefined = blogs.find(p => p.id === id);
             //const blog = await client.db().collection<Blog>("blog").find({id: {$regex: id}}).toArray()
-            const blog = yield db_1.client.db().collection("blogs").findOne({ id: id });
-            if (blog) {
-                return blog;
-            }
-            else {
-                return null;
-            }
+            const blog = yield exports.blogsCollection.findOne({ id: id }, { projection: { _id: 0 } });
+            return blog;
         });
     },
-    createBLog(blog) {
+    createBLog(newBlog) {
         return __awaiter(this, void 0, void 0, function* () {
-            const newBlog = {
-                id: '' + (+(new Date())),
-                name: blog.name,
-                description: blog.description,
-                websiteUrl: blog.websiteUrl,
-                createdAt: "" + new Date(),
-                isMembership: false
-            };
-            const result = yield db_1.client.db().collection("blogs").insertOne(newBlog);
-            return newBlog;
+            //const result = await client.db().collection<Blog>("blogs").insertOne(newBlog)
+            //return (newBlog)
+            const result = yield exports.blogsCollection.insertOne(newBlog);
+            return this.getBlogsById(newBlog.id);
         });
     },
-    updateBlog(id, blog) {
+    /*    async updateBlog(id: string, blog: Blog): Promise<boolean> {
+            const result = await blogsCollection
+                .updateOne({id: id}, {
+                    $set: {name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl},
+                })
+            return result.matchedCount === 1
+        },*/
+    updateBlogById(blog, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("blogs")
-                .updateOne({ id: id }, {
-                $set: { name: blog.name, description: blog.description, websiteUrl: blog.websiteUrl },
-            });
+            const result = yield exports.blogsCollection.updateOne({ id: id }, { $set: blog });
             return result.matchedCount === 1;
         });
     },
     deleteBlog(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("blogs").deleteOne({ id: id });
+            const result = yield exports.blogsCollection.deleteOne({ id: id });
             return result.deletedCount === 1;
         });
     },
     //delete all data
     deleteAllData() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield db_1.client.db().collection("blogs").deleteMany({});
+            const result = yield exports.blogsCollection.deleteMany({});
             return [];
         });
     },

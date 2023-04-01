@@ -15,3 +15,10 @@ export type Post = {
     blogName: string,
     createdAt: string
 }
+export type Paginator = {
+    pagesCount: number,
+    page: number,
+    pageSize: number,
+    totalCount: number,
+    items : Blog[] | Post[]
+}

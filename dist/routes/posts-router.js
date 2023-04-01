@@ -15,21 +15,20 @@ const posts_db_repository_1 = require("../repositories/posts-db-repository");
 const InputValidationMiddleWare_1 = require("../MiddleWares/InputValidationMiddleWare");
 const InputValidationMiddleWare_2 = require("../MiddleWares/InputValidationMiddleWare");
 const blogs_db_repository_1 = require("../repositories/blogs-db-repository");
+const posts_services_1 = require("../domain/posts-services");
+const pagination_helpers_1 = require("../helpers/pagination-helpers");
+//import {blogsServices} from "../domain/blogs-services";
 exports.postsRouter = (0, express_1.Router)({});
 exports.basicAuth = require('express-basic-auth');
 exports.adminAuth = (0, exports.basicAuth)({ users: { 'admin': 'qwerty' } });
 //Get All Posts By no auth
-/*postsRouter.get('/', (req: Request, res: Response) => {
-    const foundPosts = postsRepository.findPosts(req.query.title
-        ? req.query.toString()
-        : null);
-    res.status(200).send(foundPosts)
-})*/
-//Get All Posts By no auth
 exports.postsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allPosts = yield posts_db_repository_1.postsRepository.returnAllPosts();
+    let pageSize = pagination_helpers_1.paginationHelpers.pageSize(req.query.pageSize);
+    let pageNumber = pagination_helpers_1.paginationHelpers.pageNumber(req.query.pageNumber);
+    let sortBy = pagination_helpers_1.paginationHelpers.sortBy(req.query.sortBy);
+    let sortDirection = pagination_helpers_1.paginationHelpers.sortDirection(req.query.sortDirection);
+    let allPosts = yield posts_services_1.postsService.returnAllPost(pageSize, pageNumber, sortBy, sortDirection);
     res.status(200).send(allPosts);
-    return;
 }));
 //Get Post By ID no Auth
 exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,10 +50,29 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.pos
         res.sendStatus(404);
         return;
     }
-    const newPost = yield posts_db_repository_1.postsRepository.createPost(req.body, blog.id, blog.name);
+    const newPost = yield posts_services_1.postsService.createPost(req.body, blog.id, blog.name);
     res.status(201).send(newPost);
     return;
 }));
+/*postsRouter.post('/',
+    adminAuth,
+    titleCheck,
+    shortDescriptionCheck,
+    contentCheck,
+    blogIdCheck,
+    inputValidationMiddleware,
+    async (req: Request, res: Response) => {
+    console.log(req.body)
+    const blog : Blog | undefined | null = await blogsServices.getBlogsById(req.body.blogId)
+    if(blog=== null) {
+        res.sendStatus(404)
+    }else {
+        const blogId = blog.id
+        const blogName = blog.name
+    const newPost : Post | null = await postsService.createPost(req.body, blog.id, blog.name);
+        console.log(newPost)
+    res.status(201).send(newPost)
+}})*/
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isUpdated = yield posts_db_repository_1.postsRepository.updatePost(req.body, req.params.id);

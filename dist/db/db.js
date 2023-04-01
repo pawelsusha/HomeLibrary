@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.runDb = exports.client = void 0;
+exports.blogsCollection = exports.runDb = exports.client = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongodb_1 = require("mongodb");
 dotenv_1.default.config();
-const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017';
+const mongoURI = process.env.MONGO_URL; /*|| 'mongodb://0.0.0.0:27017'*/
 //const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
 const url = process.env.MONGO_URL;
 console.log('url :', url);
@@ -36,3 +36,6 @@ const runDb = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.runDb = runDb;
+class blogsCollection {
+}
+exports.blogsCollection = blogsCollection;
