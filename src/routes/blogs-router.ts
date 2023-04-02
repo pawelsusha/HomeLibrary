@@ -75,7 +75,7 @@ blogsRouter.post('/:id/posts', adminAuth,titleCheck,shortDescriptionCheck,conten
     } else {
         const blogId = blog.id;
         const blogName = blog.name;
-        const newPost : Post | null = await postsService.createPost(req.body, blogName, blogId);
+        const newPost : Post | null = await postsService.createPost(req.body, blogId, blogName);
         res.status(201).send(newPost)
         return
     }
