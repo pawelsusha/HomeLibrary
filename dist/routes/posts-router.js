@@ -54,25 +54,6 @@ exports.postsRouter.post('/', exports.adminAuth, InputValidationMiddleWare_1.pos
     res.status(201).send(newPost);
     return;
 }));
-/*postsRouter.post('/',
-    adminAuth,
-    titleCheck,
-    shortDescriptionCheck,
-    contentCheck,
-    blogIdCheck,
-    inputValidationMiddleware,
-    async (req: Request, res: Response) => {
-    console.log(req.body)
-    const blog : Blog | undefined | null = await blogsServices.getBlogsById(req.body.blogId)
-    if(blog=== null) {
-        res.sendStatus(404)
-    }else {
-        const blogId = blog.id
-        const blogName = blog.name
-    const newPost : Post | null = await postsService.createPost(req.body, blog.id, blog.name);
-        console.log(newPost)
-    res.status(201).send(newPost)
-}})*/
 //Update Post By ID + Auth
 exports.postsRouter.put('/:id', exports.adminAuth, InputValidationMiddleWare_1.postValidationMiddleware, InputValidationMiddleWare_2.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isUpdated = yield posts_db_repository_1.postsRepository.updatePost(req.body, req.params.id);

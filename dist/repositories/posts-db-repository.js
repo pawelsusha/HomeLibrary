@@ -44,18 +44,8 @@ exports.postsRepository = {
     },
     createPost(newPost) {
         return __awaiter(this, void 0, void 0, function* () {
-            /* const newPost: Post = {
-                 id: '' + (+(new Date())),
-                 title: post.title,
-                 shortDescription: post.shortDescription,
-                 content: post.content,
-                 blogId: blogId,
-                 blogName: blogName,
-                 createdAt: new Date().toISOString()
-             }*/
             const result = yield exports.postsCollection.insertOne(newPost);
             return this.getPostById(newPost.id);
-            //return newPost
         });
     },
     updatePost(post, id) {

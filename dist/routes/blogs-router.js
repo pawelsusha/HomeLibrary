@@ -82,7 +82,7 @@ exports.blogsRouter.post('/:id/posts', auth_middleware_1.adminAuth, InputValidat
     else {
         const blogId = blog.id;
         const blogName = blog.name;
-        const newPost = yield posts_services_1.postsService.createPost(req.body, blogName, blogId);
+        const newPost = yield posts_services_1.postsService.createPost(req.body, blogId, blogName);
         res.status(201).send(newPost);
         return;
     }

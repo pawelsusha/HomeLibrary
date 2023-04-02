@@ -43,17 +43,13 @@ export let posts = [
 ];
 
 export const postsService = {
-/*    async returnAllPosts(): Promise<Post[]> {
-        //const posts = await client.db().collection<Post>("posts").find({}, {projection: {_id: 0}}).toArray()
-        //return posts
-        return postsRepository.returnAllPosts();
-    },*/
     async returnAllPost(PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection) : Promise<Paginator>{
+        //const total = (await postsRepository.returnAllPosts())
         const total = await postsRepository.returnAllPosts()
         const PageCount = Math.ceil( total / PageSize)
-        const items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection);
-        console.log(items)
-        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, items)
+        const Items = await QueryRepository.PaginatorForPosts(PageCount, PageSize, Page, sortBy, sortDirection);
+        console.log(Items)
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, total, Items)
     },
     async returnAllPostByBlogId (PageSize: number, Page: number, sortBy : string, sortDirection: SortDirection, blogId: string) : Promise<Paginator>{
         let total = (await postsRepository.getAllPostsByBlogId(blogId))
@@ -64,26 +60,13 @@ export const postsService = {
             totalNumber = total.length
         }
         const PageCount = Math.ceil( totalNumber / PageSize)
-        const items = await QueryRepository.PaginatorForPostsByBlogId(PageCount, PageSize, Page, sortBy, sortDirection, blogId);
-        return QueryRepository.PaginationForm(PageCount, PageSize, Page, totalNumber, items)
+        const Items = await QueryRepository.PaginatorForPostsByBlogId(PageCount, PageSize, Page, sortBy, sortDirection, blogId);
+        return QueryRepository.PaginationForm(PageCount, PageSize, Page, totalNumber, Items)
     },
     async getPostById(id: string): Promise<Post | null> {
-        /*const post = await client.db().collection<Post>("posts").findOne({id: id}, {projection: {_id: 0}})
-        return post;*/
         return postsRepository.getPostById(id);
     },
     async createPost(post: Post, blogId: string, blogName: string): Promise<Post | null> {
-    /*    const newPost: Post = {
-            id: '' + (+(new Date())),
-            title: post.title,
-            shortDescription: post.shortDescription,
-            content: post.content,
-            blogId: blogId,
-            blogName: blogName,
-            createdAt: new Date().toISOString()
-        }
-        const result = await client.db().collection<Post>("posts").insertOne(newPost)
-        return this.getPostById(newPost.id)*/
         const newPost: Post = {
             id: '' + (+(new Date())),
             title: post.title,
@@ -98,28 +81,12 @@ export const postsService = {
     },
     async updatePost(post: Post, id: string): Promise<Post | boolean> {
         return await postsRepository.updatePost(post, id)
-/*        const result = await client.db().collection<Post>("posts")
-            .updateOne({id: id}, {
-                $set:
-                    {
-                        title: post.title,
-                        shortDescription: post.shortDescription,
-                        content: post.content,
-                        blogId: post.blogId
-                    },
-            })
-        return result.matchedCount === 1*/
     },
     async deletePost(id: string): Promise<boolean> {
         return await postsRepository.deletePost(id)
-        /*const result = await client.db().collection<Post>("posts").deleteOne({id: id})
-        return result.deletedCount === 1*/
     },
     async deleteAllData() {
         return await postsRepository.deleteAllData()
-        /*const result = await client.db().collection<Post>("posts").deleteMany({});
-        return [];*/
-
     },
     //return all posts by blogId
     async getAllPostsByBlogId(blogId : string) : Promise<Post[]>{

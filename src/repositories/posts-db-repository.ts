@@ -46,18 +46,8 @@ export const postsRepository = {
             return post;
         },
         async createPost(newPost: Post): Promise<Post | null> {
-           /* const newPost: Post = {
-                id: '' + (+(new Date())),
-                title: post.title,
-                shortDescription: post.shortDescription,
-                content: post.content,
-                blogId: blogId,
-                blogName: blogName,
-                createdAt: new Date().toISOString()
-            }*/
             const result = await postsCollection.insertOne(newPost)
             return this.getPostById(newPost.id)
-            //return newPost
         },
         async updatePost(post: Post, id: string): Promise<Post | boolean> {
             const result = await postsCollection
