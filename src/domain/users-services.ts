@@ -4,7 +4,7 @@ import {ObjectId} from "mongodb"
 
 
 
-export const usersServices = {
+export const usersService = {
     async createUser(login: string, email:string, password:string): Promise<UserDbType>{
 
         const passwordSalt = await bcrypt.genSalt(10)
