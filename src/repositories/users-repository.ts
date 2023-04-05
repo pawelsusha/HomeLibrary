@@ -19,5 +19,7 @@ async getAllUsers(): Promise<UserDBType[]>{
     const user = await userCollection.findOne({$or: [{emeil: loginOrEmail}, {userName: loginOrEmail}]})
     return user
     }
+    async updateConfirmation(id){
+    userCollection.updateOne({_id}),{$set:{"emailConfirmation.isConfirmed":true}}
 }
 export const repositoryDB = {}
