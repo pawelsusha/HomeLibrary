@@ -8,10 +8,10 @@ export const usersService = {
     async createUser(login: string, email:string, password:string): Promise<UserDbType>{
 
         const passwordSalt = await bcrypt.genSalt(10)
-        const passwordHash =  await this.generateHash(password, passwordSalt)
+        const passwordHash =  await this._generateHash(password, passwordSalt)
 
         const newUser:UserDBType = {
-            _id:new ObjectId(),
+            _id: new ObjectId(),
             userName: login,
             email,
             passwordHash,
@@ -25,7 +25,7 @@ export const usersService = {
     },
     async checkCredentials (loginOrEmail: string, password: string) {
         const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
-        if(!user) return false
+        if (!user) return false
         const passwordHash = await this._generateHash(password, user.passwordSalt)
         if (user.passwordSalt !== passwordHash) {
             return false

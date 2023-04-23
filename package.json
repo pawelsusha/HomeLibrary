@@ -12,7 +12,8 @@
     "express-basic-auth": "^1.2.1",
     "express-validator": "^6.15.0",
     "mongodb": "^5.1.0",
-    "mongodb-uri": "^0.9.7"
+    "mongodb-uri": "^0.9.7",
+    "nodemailer": "^6.9.1"
   },
   "scripts": {
     "dev": "yarn nodemon --inspect dist/index.js",
