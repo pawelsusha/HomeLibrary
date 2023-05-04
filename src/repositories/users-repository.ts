@@ -88,7 +88,7 @@ export const usersQueryRepository = {
         const dbSearchEmailTerm = searchEmailTerm || null
         const dbLoginSearchRegex = new RegExp(`${dbSearchLoginTerm}`, 'i')
         const dbEmailSearchRegex = new RegExp(`${dbSearchEmailTerm}`, 'i')
-        // TODO Пустой массив на уроке надо было пофиксить
+
         let dbSearchFilter = {}
         if (dbSearchLoginTerm) {
             if (dbSearchEmailTerm) {
