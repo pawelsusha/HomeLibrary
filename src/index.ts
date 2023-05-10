@@ -30,7 +30,7 @@ app.delete('/testing/all-data', async (req: Request,res: Response) => {
     res.sendStatus(204)
 });
 app.get('/', (req, res) => {
-    res.send('Blog Platform $4 23Mar2023/2259')
+    res.send('Blog Platform $5 10May2023/1708')
 })
 //app.use(basicAuth)
 
