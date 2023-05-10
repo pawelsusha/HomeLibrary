@@ -8,28 +8,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.runDb = exports.usersAccountsCollection = exports.client = void 0;
+exports.blogsCollection = exports.runDb = exports.usersAccountsCollection = exports.client = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
 const mongodb_1 = require("mongodb");
-const settings_1 = require("../settings");
-exports.client = new mongodb_1.MongoClient(settings_1.settings.MONGO_URI);
+dotenv_1.default.config();
+const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017';
+//const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
+const url = process.env.MONGO_URL;
+console.log('url :', url);
+if (!url) {
+    throw new Error('❌! Url doesnt found');
+}
+exports.client = new mongodb_1.MongoClient(mongoURI);
 let db = exports.client.db("users-registration");
 exports.usersAccountsCollection = db.collection('accounts');
-function runDb() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            // Connect the client to the server
-            yield exports.client.connect();
-            // Establish and verify connection
-            //await client.db("products").command({ ping: 1 });
-            yield exports.client.db().command({ ping: 1 });
-            console.log("✅ Connected successfully to mongo server");
-        }
-        catch (_a) {
-            console.error("❌ Can't connect to DB");
-            // Ensures that the client will close when you finish/error
-            yield exports.client.close();
-        }
-    });
-}
+const runDb = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield exports.client.connect();
+        yield exports.client.db().command({ ping: 1 });
+        console.log('✅   Connected successfully to server');
+    }
+    catch (e) {
+        console.log('❌   Does not connected to server');
+        yield exports.client.close();
+    }
+});
 exports.runDb = runDb;
+class blogsCollection {
+}
+exports.blogsCollection = blogsCollection;
