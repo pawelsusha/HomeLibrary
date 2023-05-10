@@ -24,26 +24,3 @@ export type Paginator = {
     totalCount: number,
     items : Blog[] | Post[]
 }
-export type UserAccountDBType = WithId<{
-    accountData: UserAccountDBType,
-    loginAttempts: loginAttemptsType[],
-    emeailConfirmation: EmailConfirmationType
-}>
-export type EmailConfirmationType = {
-    IsConfirmed: boolean,
-    confirmationCode: Date,
-    sentEmails: SentConfirmationEmailType[]
-}
-export type UserAccountType = {
-    email:string,
-    userName:string,
-    passwordHash:string,
-    createdAt: Date
-}
-export type SentConfirmationEmailType = {
-    sentDate:Date
-}
-export type LoginAttemptType = {
-    attemptDate:Date
-    ip:string
-}
