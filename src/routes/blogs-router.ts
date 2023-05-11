@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import {Blog, blogsServices} from "../domain/blogs-services";
-import {adminAuth, } from "../MiddleWares/auth-middleware";
+import {adminAuth} from "../MiddleWares/auth-middleware";
 import {
     inputValidationMiddleware,
     blogValidationMiddleware,
