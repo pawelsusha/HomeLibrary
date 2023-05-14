@@ -1,3 +1,4 @@
+/*
 import {usersRepository} from '../repositories/users-repository'
 import {UserAccountDBType} from '../repositories/types'
 import {ObjectId} from 'mongodb'
@@ -32,7 +33,7 @@ export const authService = {
         const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
         if (!user) return null
 
-        if (!user.emailConfirmation.isConfirmed) {
+        if (!user.emailConfirmation.isConfirmed) {return
             return null
         }
 
@@ -66,3 +67,4 @@ export const authService = {
         return true
     }
 }
+*/

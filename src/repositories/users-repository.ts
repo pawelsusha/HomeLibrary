@@ -1,22 +1,28 @@
-import {usersAccountsCollection} from '../db/db'
-import {UserAccountDBType} from './types'
+import {client} from '../db/db'
+import {UserAccountDBType, UserAccountType} from './types'
 import {ObjectId} from 'mongodb'
 
-export const usersRepository = {
-    async getAllUsers(): Promise<UserAccountDBType[]> {
+
+
+export const usersAccountsCollection = client.db().collection<UserAccountType>('users');
+export const usersRepository =
+    {
+        async createUser(newUser: UserAccountType): Promise<UserAccountType | null> {
+            const result = await usersAccountsCollection.insertOne(newUser)
+            return newUser
+
+        },
+    async getAllUsers(): Promise<UserAccountType[]> {
         return usersAccountsCollection
             .find()
             .sort('createdAt', -1)
             .toArray()
     },
-    async createUser(user: UserAccountDBType): Promise<UserAccountDBType> {
-        const result = await usersAccountsCollection.insertOne(user)
-        return user
-    },
-    async findUserById(id: ObjectId): Promise<UserAccountDBType | null> {
-        let product = await usersAccountsCollection.findOne({_id: id})
-        if (product) {
-            return product
+
+    async findUserById(id: ObjectId): Promise<UserAccountType | null> {
+        let UserById = await usersAccountsCollection.findOne({_id: id})
+        if (UserById) {
+            return UserById
         } else {
             return null
         }
@@ -27,4 +33,4 @@ export const usersRepository = {
     }
 }
 
-export const repositoryDB = {}
+//export const repositoryDB = {}

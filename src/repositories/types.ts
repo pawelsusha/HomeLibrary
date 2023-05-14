@@ -14,11 +14,17 @@ export type EmailConfirmationType = {
 }
 
 export type UserAccountType = {
+    login: string
     email: string
-    userName: string
-    passwordHash: string
-    createdAt: Date
+    password: string
+    createdAt: string
 }
+// export type UserAccountType = {
+//     email: string
+//     userName: string
+//     passwordHash: string
+//     createdAt: Date
+// }
 export type SentConfirmationEmailType = {
     sentDate: Date
 }

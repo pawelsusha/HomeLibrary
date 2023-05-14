@@ -1,3 +1,4 @@
+/*
 import {Request, Response, Router} from 'express'
 import {authService} from '../domain/auth-service'
 import {jwtService} from '../application/jwt-service'
@@ -29,4 +30,4 @@ authRouter.post('/confirm-email',
         } else {
             res.sendStatus(400)
         }
-    })
+    })*/

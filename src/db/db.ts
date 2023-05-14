@@ -41,7 +41,7 @@ if (!url) {
 export const client = new MongoClient(mongoURI!);
 let db = client.db("users-registration")
 
-export const usersAccountsCollection = db.collection<UserAccountDBType>('accounts')
+//export const usersAccountsCollection = db.collection<UserAccountDBType>('accounts')
 export const runDb = async () => {
     try {
         await client.connect();
