@@ -32,6 +32,7 @@ exports.postsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
 }));
 //Get Post By ID no Auth
 exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
     let post = yield posts_db_repository_1.postsRepository.getPostById(req.params.id);
     if (post) {
         res.status(200).send(post);

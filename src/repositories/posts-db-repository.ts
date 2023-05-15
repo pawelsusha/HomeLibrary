@@ -36,7 +36,7 @@ export let posts = [
         "blogName": "second"
     }
 ];
-export const postsCollection = client.db().collection<Post>("posts");
+export const postsCollection = client.db().collection<Post>("posts3");
 export const postsRepository = {
         async returnAllPosts(): Promise<number> {
             return postsCollection.countDocuments({})

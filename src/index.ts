@@ -4,6 +4,7 @@ import {postsRouter} from "./routes/posts-router";
 import {posts, postsRepository} from "./repositories/posts-db-repository";
 import {blogs, blogsRepository} from "./repositories/blogs-db-repository";
 import {runDb} from "./db/db";
+import {usersRouter} from "./routes/users-router";
 
 
 
@@ -15,6 +16,8 @@ app.use(express.json());
 const port = 3000
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
+app.use('/users', usersRouter)
+//app.use('/auth', authRouter)
 
 /*
 app.delete('/testing/all-data', (req:Request, res: Response ) => {
@@ -40,6 +43,8 @@ export const startApp = async() =>{
         console.log(`Example app listening on port ${port}`)
     })
 }
+
+
 startApp()
 
 

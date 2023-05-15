@@ -14,6 +14,7 @@ export type EmailConfirmationType = {
 }
 
 export type UserAccountType = {
+    id?: string;
     login: string
     email: string
     password: string

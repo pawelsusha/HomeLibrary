@@ -25,22 +25,22 @@ export async function runDb() {
 import {UserAccountDBType} from '../repositories/types'
 import {settings} from '../settings'
 import dotenv from 'dotenv'
-import {MongoClient} from "mongodb";
+import {MongoClient, ObjectId } from "mongodb";
+import {WithId} from 'mongodb'
 dotenv.config()
 const mongoURI: string | undefined = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 //const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
 
 
 
-const url = process.env.MONGO_URL
+const url = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 console.log('url :', url)
 if (!url) {
     throw new Error('❌! Url doesnt found')
 }
 
 export const client = new MongoClient(mongoURI!);
-let db = client.db("users-registration")
-
+//let db = client.db("users-registration")
 //export const usersAccountsCollection = db.collection<UserAccountDBType>('accounts')
 export const runDb = async () => {
     try {

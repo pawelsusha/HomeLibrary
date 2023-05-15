@@ -37,6 +37,7 @@ res.status(200).send(allPosts)
 //Get Post By ID no Auth
 postsRouter.get('/:id',
     async (req: Request, res: Response) => {
+        console.log(req.body)
     let post = await postsRepository.getPostById(req.params.id)
     if (post) {
         res.status(200).send(post)

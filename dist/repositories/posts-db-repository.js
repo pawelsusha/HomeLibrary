@@ -29,7 +29,7 @@ exports.posts = [
         "blogName": "second"
     }
 ];
-exports.postsCollection = db_1.client.db().collection("posts");
+exports.postsCollection = db_1.client.db().collection("posts3");
 exports.postsRepository = {
     returnAllPosts() {
         return __awaiter(this, void 0, void 0, function* () {

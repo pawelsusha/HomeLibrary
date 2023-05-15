@@ -10,7 +10,7 @@ import {settings} from '../settings'
 export const usersService = {
     //usersAccountsCollection: undefined,
     async getAllUsers(): Promise<UserAccountType[]> {
-        return usersRepository.getAllUsers()
+        return usersRepository.getAll()
     },
     async findUserById(id: ObjectId): Promise<UserAccountType | null> {
         return usersRepository.findUserById(id)
@@ -18,15 +18,17 @@ export const usersService = {
 
     //CREATE NEW USER
      async createUser(user : UserAccountType, isConfirmed : boolean = true, confirmationCode : null | string = null) : Promise<UserAccountType | null>{
+     //async createUser(user: UserAccountType, login: string, email: string, password: string,) : Promise<UserAccountType>{
      //const hash = bcrypt.hashSync(user.passwordHash, 10, )
-        const newUser =  {
-           id: (+new Date()).toString(),
+        const newUser = {
+          // id: (+new Date()).toString(),
             login: user.login,
             email: user.email,
             password : user.password,
             createdAt: new Date().toISOString(),
-            //isConfirmed: isConfirmed,
-            //confirmedCode : confirmationCode
+            isConfirmed: isConfirmed,
+            confirmedCode : confirmationCode
+
         }
 
          const createdUser = await usersRepository.createUser(newUser)

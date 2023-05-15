@@ -18,13 +18,13 @@ const mongodb_1 = require("mongodb");
 dotenv_1.default.config();
 const mongoURI = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017';
 //const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
-const url = process.env.MONGO_URL;
+const url = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017';
 console.log('url :', url);
 if (!url) {
     throw new Error('❌! Url doesnt found');
 }
 exports.client = new mongodb_1.MongoClient(mongoURI);
-let db = exports.client.db("users-registration");
+//let db = client.db("users-registration")
 //export const usersAccountsCollection = db.collection<UserAccountDBType>('accounts')
 const runDb = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
