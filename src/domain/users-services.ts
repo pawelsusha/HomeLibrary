@@ -14,20 +14,25 @@ export const usersService = {
     async getAllUsers(): Promise<UserAccountType[]> {
         return usersRepository.getAll()
     },
-    async findUserById(id: ObjectId): Promise<UserAccountType | null> {
+
+    async findUserById(id: string): Promise<UserAccountType | null> {
         return usersRepository.findUserById(id)
+
+
     },
 
     //CREATE NEW USER
-     //async createUser(user : UserAccountType, login: string, email:string, password: string, isConfirmed : boolean = true, confirmationCode : null | string = null) : Promise<UserAccountType | null>{
+     //async createUser(dataToCreateUser : UserInputModel) : Promise<UserViewModel | null>{
+     //async createUser(user : UserAccountType, isConfirmed : boolean = true, confirmationCode : null | string = null) : Promise<UserAccountType | null>{
      async createUser(login: string, email:string, password: string) : Promise<UserAccountType | null>{
-     //async createUser(user: UserAccountType, login: string, email: string, password: string,) : Promise<UserAccountType>{
-     //const hash = bcrypt.hashSync(user.passwordHash, 10, )
-        const newUser = {
+
+     const passwordHash = bcrypt.hashSync(password, 10, )
+
+         const newUser: UserAccountType = {
           // id: (+new Date()).toString(),
             login: login,
             email: email,
-            password : password,
+            passwordHash : password,
             createdAt: new Date().toISOString(),
            // isConfirmed: isConfirmed,
            // confirmedCode : confirmationCode
@@ -36,8 +41,6 @@ export const usersService = {
           return createdUser
 
     },
-
-
     // async createUser(dataToCreateUser: UserInputModel): Promise<UserViewModel> {
     //     const {login, password, email} = dataToCreateUser
     //     const passwordSalt = await bcrypt.genSalt(10)
@@ -52,4 +55,12 @@ export const usersService = {
     //     }
     //     return usersRepository.createUser(newUser)
     // },
-};
+
+
+    async checkCredentials(loginOrEmail: string, password: string) {
+        const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
+        if (!user) return false;
+        const passwordHash = bcrypt.hashSync(password, 10, )
+        return user.passwordHash === passwordHash
+        }
+}

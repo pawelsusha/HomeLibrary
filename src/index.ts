@@ -5,6 +5,7 @@ import {posts, postsRepository} from "./repositories/posts-db-repository";
 import {blogs, blogsRepository} from "./repositories/blogs-db-repository";
 import {runDb} from "./db/db";
 import {usersRouter} from "./routes/users-router";
+import {authRouter} from "./routes/auth_router";
 
 
 
@@ -17,7 +18,8 @@ const port = 3000
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 app.use('/users', usersRouter)
-//app.use('/auth', authRouter)
+app.use('/auth', authRouter)
+    //app.use('/login', authRouter)
 
 /*
 app.delete('/testing/all-data', (req:Request, res: Response ) => {

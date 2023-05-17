@@ -1,4 +1,4 @@
-import {WithId} from 'mongodb'
+import {ObjectId, WithId} from 'mongodb'
 
 export type UserAccountDBType = WithId<{
     accountData: UserAccountType,
@@ -14,10 +14,10 @@ export type EmailConfirmationType = {
 }
 
 export type UserAccountType = {
-    id?: string;
+    id?: string
     login: string
     email: string
-    password: string
+    passwordHash: string
     createdAt: string
 }
 // export type UserAccountType = {

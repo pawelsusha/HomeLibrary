@@ -1,6 +1,8 @@
 import {client} from '../db/db'
 import {UserAccountDBType, UserAccountType} from './types'
 import {ObjectId} from 'mongodb'
+import {UserViewModel} from "../models/UsersModels/UserViewModel";
+import {UserCreateModel} from "../models/UsersModels/UserCreateModel";
 
 
 const dbName = "mydb";
@@ -18,13 +20,14 @@ export const usersRepository =
         //     return { id: result.insertedId.toString(), ...user };
         // },
 
+
         async createUser(newUser: UserAccountType): Promise<UserAccountType> {
             const createResult = await usersAccountsCollection.insertOne(newUser)
             return {
                 id: createResult.insertedId.toString(),
                 login: newUser.login,
                 email: newUser.email,
-                password: newUser.password,
+                passwordHash: newUser.passwordHash,
                 createdAt: newUser.createdAt,
             }
         },
@@ -43,7 +46,7 @@ export const usersRepository =
             .toArray()
     },
 
-    async findUserById(id: ObjectId): Promise<UserAccountType | null> {
+    async findUserById(id: string): Promise<UserAccountType | null> {
         let UserById = await usersAccountsCollection.findOne({_id: new ObjectId(id)})
         if (UserById) {
             return UserById
