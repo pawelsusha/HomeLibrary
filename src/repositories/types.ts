@@ -18,6 +18,7 @@ export type UserAccountType = {
     login: string
     email: string
     passwordHash: string
+    passwordSalt: string
     createdAt: string
 }
 // export type UserAccountType = {

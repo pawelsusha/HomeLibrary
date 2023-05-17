@@ -28,6 +28,7 @@ export const usersRepository =
                 login: newUser.login,
                 email: newUser.email,
                 passwordHash: newUser.passwordHash,
+                passwordSalt: newUser.passwordSalt,
                 createdAt: newUser.createdAt,
             }
         },

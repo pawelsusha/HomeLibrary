@@ -44,11 +44,11 @@ export const authService = {
     //         return null
     //     }
     // },
-    async _generateHash(password: string) {
-        const hash = await bcrypt.hash(password, 10)
-        console.log('hash: ' + hash)
-        return hash
-    },
+    // async _generateHash(password: string) {
+    //     const hash = await bcrypt.hash(password, 10)
+    //     console.log('hash: ' + hash)
+    //     return hash
+    // },
     async _isHashesEquals(hash1: string, hash2: string) {
         const isEqual = await bcrypt.compare(hash1, hash2)
         return isEqual
