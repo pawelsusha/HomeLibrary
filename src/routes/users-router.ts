@@ -9,6 +9,7 @@ usersRouter.post('/', async (req: Request, res: Response) => {
     const newUser = await usersService.createUser(req.body.login, req.body.email, req.body.password)
    //const newUser = await usersService.createUser(req.body)
     res.status(201).send(newUser)
+    console.log(newUser)
 })
 
 usersRouter.get('/', async (req: Request, res: Response) => {

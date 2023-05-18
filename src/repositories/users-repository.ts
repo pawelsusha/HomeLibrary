@@ -20,14 +20,15 @@ export const usersRepository =
         // },
 
 
-        async createUser(newUser: UserAccountType): Promise<UserAccountType> {
+//        async createUser(newUser: UserAccountType): Promise<UserAccountType> {
+        async createUser(newUser: UserAccountType): Promise<UserViewModel> {
             const createResult = await usersAccountsCollection.insertOne(newUser)
             return {
                 id: createResult.insertedId.toString(),
                 login: newUser.login,
                 email: newUser.email,
-                passwordHash: newUser.passwordHash,
-                passwordSalt: newUser.passwordSalt,
+                // passwordHash: newUser.passwordHash,
+                // passwordSalt: newUser.passwordSalt,
                 createdAt: newUser.createdAt,
             }
         },

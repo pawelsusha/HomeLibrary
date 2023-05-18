@@ -20,7 +20,7 @@ export const usersService = {
     //CREATE NEW USER
      //async createUser(dataToCreateUser : UserInputModel) : Promise<UserViewModel | null>{
      //async createUser(user : UserAccountType, isConfirmed : boolean = true, confirmationCode : null | string = null) : Promise<UserAccountType | null>{
-     async createUser(login: string, email:string, password: string) : Promise<UserAccountType | null>{
+     async createUser(login: string, email:string, password: string) : Promise<UserViewModel | null>{
         const passwordSalt = await bcrypt.genSalt(10)
         const passwordHash = await this._generateHash(password, passwordSalt)
         const newUser: UserAccountType = {
