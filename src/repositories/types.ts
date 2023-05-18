@@ -35,3 +35,16 @@ export type LoginAttemptType = {
     attemptDate: Date
     ip: string
 }
+export type AdminDBType = WithId<{
+    email: string
+    name: string
+    passwordHash: string
+    createdAt: Date
+}>
+
+export type FeedbackDBType = WithId<{
+    adminId: ObjectId
+    adminName: string
+    comment: string
+    createdAt: Date
+}>

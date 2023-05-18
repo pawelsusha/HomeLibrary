@@ -1,5 +1,5 @@
-import {client} from '../db/db'
-import {UserAccountDBType, UserAccountType} from './types'
+import {client, usersAccountsCollection} from '../db/db'
+import {UserAccountDBType, UserAccountType} from '../repositories/types'
 import {ObjectId} from 'mongodb'
 import {UserViewModel} from "../models/UsersModels/UserViewModel";
 import {UserCreateModel} from "../models/UsersModels/UserCreateModel";
@@ -8,7 +8,6 @@ import {UserCreateModel} from "../models/UsersModels/UserCreateModel";
 const dbName = "mydb";
 //const collectionName = "users";
 //client.db().createCollection<UserAccountType>("users");
-export const usersAccountsCollection = client.db().collection<UserAccountType>("users");
 
 
 export const usersRepository =
@@ -61,4 +60,6 @@ export const usersRepository =
     }
 }
 
+
+export { usersAccountsCollection };
 //export const repositoryDB = {}

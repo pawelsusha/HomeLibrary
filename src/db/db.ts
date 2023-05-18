@@ -22,11 +22,14 @@ export async function runDb() {
         await client.close();
     }
 }*/
-import {UserAccountDBType} from '../repositories/types'
+
 import {settings} from '../settings'
 import dotenv from 'dotenv'
 import {MongoClient, ObjectId } from "mongodb";
 import {WithId} from 'mongodb'
+import {UserAccountType, FeedbackDBType} from "../repositories/types";
+import {AdminDBType} from "../repositories/types";
+
 dotenv.config()
 const mongoURI: string | undefined = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017'
 //const mongoURI = "mongodb://0.0.0.0:27017/?maxPoolSize=20&w=majority";
@@ -40,6 +43,9 @@ if (!url) {
 }
 
 export const client = new MongoClient(mongoURI!);
+export const usersAccountsCollection = client.db().collection<UserAccountType>("users");
+export const adminsCollection = client.db().collection<AdminDBType>('admins')
+export const feedbacksCollection = client.db().collection<FeedbackDBType>('feedbacks')
 //let db = client.db("users-registration")
 //export const usersAccountsCollection = db.collection<UserAccountDBType>('accounts')
 export const runDb = async () => {

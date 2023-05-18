@@ -16,7 +16,7 @@ authRouter.post('/login',
       //  const user = await authService.checkCredentials(req.body.loginOrEmail, req.body.password)
         const checkResult = await usersService.checkCredentials(req.body.loginOrEmail, req.body.password)
         if (checkResult.resultCode === 0) {
-           // const token = await jwtService.createJWT(token)
+           //  const token = await jwtService.createJWT(token)
             res.status(201).send(checkResult.data)
         } else {
             res.sendStatus(401)

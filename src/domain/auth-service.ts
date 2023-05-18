@@ -1,68 +1,38 @@
-import {usersRepository} from '../repositories/users-repository'
-import {UserAccountDBType, UserAccountType} from '../repositories/types'
+import {adminsRepository} from '../repositories/admins-repository'
+import {AdminDBType} from '../repositories/types'
 import {ObjectId} from 'mongodb'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import {settings} from '../settings'
-import {usersService} from './users-services'
-
+import {jwtService} from '../application/jwt-service'
 
 export const authService = {
-    // async createUser(login: string, email: string, password: string): Promise<UserAccountType> {
-    //     const passwordHash = await this._generateHash(password)
-    //     const newProduct: UserAccountType = {
-    //         _id: new ObjectId(),
-    //         accountData: {
-    //             userName: login,
-    //             email,
-    //             passwordHash,
-    //             createdAt: new Date()
-    //         },
-    //         loginAttempts: [],
-    //         emailConfirmation: {
-    //             sentEmails: [],
-    //             confirmationCode: "", //todo: generate code
-    //             expirationDate: new Date(), //todo: get now + 1 day,
-    //             isConfirmed: false
-    //         }
-    //     }
-    //     return usersRepository.createUser(newProduct)
-    // },
-    // async checkCredentials(loginOrEmail: string, password: string) {
-    //     const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
-    //     if (!user) return null
-    //
-    //     if (!user.emailConfirmation.isConfirmed) {return
-    //         return null
-    //     }
-    //
-    //     const passwordHash = await this._generateHash(password)
-    //     const isHashesEquals = await this._isHashesEquals(passwordHash, user.accountData.passwordHash)
-    //     if (isHashesEquals) {
-    //         return user
-    //     } else {
-    //         return null
-    //     }
-    // },
-    // async _generateHash(password: string) {
-    //     const hash = await bcrypt.hash(password, 10)
-    //     console.log('hash: ' + hash)
-    //     return hash
-    // },
-    async _isHashesEquals(hash1: string, hash2: string) {
-        const isEqual = await bcrypt.compare(hash1, hash2)
-        return isEqual
+    async getAllAdmins(): Promise<AdminDBType[]> {
+        return adminsRepository.getAll()
     },
-    // async checkAndFindUserByToken(token: string) {
-    //     try {
-    //         const result: any = jwt.verify(token, settings.JWT_SECRET)
-    //         const user = await usersService.findUserById(new ObjectId(result.userId))
-    //         return user
-    //     } catch (error) {
-    //         return null
-    //     }
-    // },
-    confirmEmail(code: string, email: string): boolean {
-        return true
+    /**
+     *
+     * @param email
+     * @param password
+     * @return null if credentials are incorrect and admin entity in opposite case
+     */
+    async checkCredentials(email: string, password: string): Promise<AdminDBType | null> {
+        return null
+    },
+    async generateHash(password: string) {
+        const hash = await bcrypt.hash(password, 10)
+        return hash
+    },
+    async isPasswordCorrect(password: string, hash: string) {
+        const compareResult: boolean = await bcrypt.compare(password, hash)
+        return compareResult
+    },
+    async checkAndFindUserByToken(token: string) {
+        try {
+            const adminId: ObjectId | null = await jwtService.getUserIdByToken(token)
+            if (!adminId) return null
+            const admin = await adminsRepository.findById(adminId)
+            return admin
+        } catch (error) {
+            return null
+        }
     }
 }
