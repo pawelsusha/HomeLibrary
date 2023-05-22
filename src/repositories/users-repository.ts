@@ -1,5 +1,5 @@
 import {client, usersAccountsCollection} from '../db/db'
-import {UserAccountDBType, UserAccountType} from '../repositories/types'
+import {UserAccountDBType, UserAccountType, UserAccountType2} from '../repositories/types'
 import {ObjectId} from 'mongodb'
 import {UserViewModel} from "../models/UsersModels/UserViewModel";
 import {UserCreateModel} from "../models/UsersModels/UserCreateModel";
@@ -40,17 +40,24 @@ export const usersRepository =
         //         return { id: _id.toString(), ...userData } as UserAccountType;
         //     });
         // },
+    // async getAll(): Promise<UserAccountType2[]> {
+    //     return usersAccountsCollection
+    //         .find()
+    //         .sort('createdAt', -1)
+    //         .toArray()
+    // },
     async getAll(): Promise<UserAccountType[]> {
-        return usersAccountsCollection
+        const createResult = await usersAccountsCollection
             .find()
             .sort('createdAt', -1)
             .toArray()
+        return      createResult ;
     },
 
     async findUserById(id: string): Promise<UserAccountType | null> {
-        let UserById = await usersAccountsCollection.findOne({_id: new ObjectId(id)})
-        if (UserById) {
-            return UserById
+        let userById = await usersAccountsCollection.findOne({_id: new ObjectId(id)})
+        if (userById) {
+            return userById
         } else {
             return null
         }

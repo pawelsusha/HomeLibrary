@@ -21,12 +21,12 @@ export type UserAccountType = {
     passwordSalt: string
     createdAt: string
 }
-// export type UserAccountType = {
-//     email: string
-//     userName: string
-//     passwordHash: string
-//     createdAt: Date
-// }
+export type UserAccountType2 = {
+    id?: string
+    login: string
+    email: string
+    createdAt: string
+}
 export type SentConfirmationEmailType = {
     sentDate: Date
 }

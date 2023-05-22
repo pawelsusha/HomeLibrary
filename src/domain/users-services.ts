@@ -1,5 +1,5 @@
 import {usersAccountsCollection, usersRepository} from '../repositories/users-repository'
-import {UserAccountDBType, UserAccountType} from '../repositories/types'
+import {UserAccountDBType, UserAccountType, UserAccountType2} from '../repositories/types'
 import {ObjectId} from 'mongodb'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -38,24 +38,22 @@ export const usersService = {
 
     },
       async checkCredentials(loginOrEmail: string, password: string) {
-        const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
-        if (!user) return {
-            resultCode: 1,
-            data: {token: null}
-        };
-        const passwordHash = await this._generateHash(password, user.passwordSalt)
+          const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
+          if (!user) return {
+              resultCode: 1,
+              data: {token: null}
+          };
+          const passwordHash = await this._generateHash(password, user.passwordSalt)
           const result = user.passwordHash === passwordHash
-        const token = jwt.sign({ userId: user._id }, 'super-secret', {expiresIn: '1m'});
-        return {
-                resultCode: result ? 0 : 1,
-            data: {
-                    token:token
-            }
-        };
+          const token = jwt.sign({userId: user._id}, 'super-secret', {expiresIn: '1m'});
+          return {
+              resultCode: result ? 0 : 1,
+              data: {
+                  token: token
+              }
+          };
+      },
 
-
-
-        },
     async _generateHash(password: string, salt: string) {
         const hash = await bcrypt.hash(password, salt)
         console.log('hash: ' + hash)
